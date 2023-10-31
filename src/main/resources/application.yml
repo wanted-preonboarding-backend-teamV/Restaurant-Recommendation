@@ -17,3 +17,7 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
+
+openapi:
+  base-url: https://openapi.gg.go.kr
+  service-key: ${SERVICE_KEY}
