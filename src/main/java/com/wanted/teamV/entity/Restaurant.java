@@ -44,7 +44,7 @@ public class Restaurant {
     Double lon;
 
     @Column(nullable = false)
-    Double avg_rating;
+    Double averageRating;
 
     @OneToMany(mappedBy = "restaurant")
     List<Rating> ratingList = new ArrayList<>();
@@ -68,7 +68,7 @@ public class Restaurant {
 
     @Builder
     public Restaurant(String name, String sigun, String type, String roadnameAddress, String lotAddress, String zipCode,
-                      Double lat, Double lon, Double avg_rating, List<Rating> ratingList, String bsnStateNm, String sigunCd,
+                      Double lat, Double lon, Double averageRating, List<Rating> ratingList, String bsnStateNm, String sigunCd,
                       LocalDateTime licenseDe, LocalDateTime clsbizDe, Double locplcAr, String gradFacltDivNm,
                       Integer maleEnflpsnCnt, Integer year, Boolean multiUseBizestblYn, String gradDivNm, Double totFacltScale,
                       Integer femaleEnflpsnCnt, String circumfrDivNm, String sanittnIndutypeNm, Integer totEmplyCnt) {
@@ -80,7 +80,7 @@ public class Restaurant {
         this.zipCode = zipCode;
         this.lat = lat;
         this.lon = lon;
-        this.avg_rating = avg_rating;
+        this.averageRating = averageRating;
         this.ratingList = ratingList;
         this.bsnStateNm = bsnStateNm;
         this.sigunCd = sigunCd;
