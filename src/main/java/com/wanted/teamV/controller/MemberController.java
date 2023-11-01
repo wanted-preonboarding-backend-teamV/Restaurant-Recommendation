@@ -6,10 +6,6 @@ import com.wanted.teamV.dto.req.MemberLoginReqDto;
 import com.wanted.teamV.dto.req.MemberUpdateReqDto;
 import com.wanted.teamV.dto.res.MemberInfoResDto;
 import com.wanted.teamV.dto.res.MemberTokenResDto;
-import com.wanted.teamV.entity.Member;
-import com.wanted.teamV.exception.CustomException;
-import com.wanted.teamV.exception.ErrorCode;
-import com.wanted.teamV.repository.MemberRepository;
 import com.wanted.teamV.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
     @PostMapping()
     public ResponseEntity<String> join(
