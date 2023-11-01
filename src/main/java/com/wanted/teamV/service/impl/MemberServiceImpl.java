@@ -75,7 +75,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfoResDto updateMember(Long memberId, Double lat, Double lon, Boolean recommend) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        
+
+        if (lat == null) lat = member.getLat();
+        if (lon == null) lon = member.getLon();
+        if (recommend == null) recommend = member.getRecommend();
+
         memberRepository.updateMemberFields(memberId, lat, lon, recommend);
 
         MemberInfoResDto response = MemberInfoResDto.builder()

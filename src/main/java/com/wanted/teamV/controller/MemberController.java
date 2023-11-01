@@ -53,22 +53,9 @@ public class MemberController {
             @AuthenticationPrincipal LoginMember loginMember,
             @RequestBody MemberUpdateReqDto memberUpdateReqDto
     ) {
-        Member member = memberRepository.findById(loginMember.id()).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         Double lat = memberUpdateReqDto.lat();
         Double lon = memberUpdateReqDto.lon();
         Boolean recommend = memberUpdateReqDto.recommend();
-
-        if (memberUpdateReqDto.lat() == null) {
-            lat = member.getLat();
-        }
-
-        if (memberUpdateReqDto.lon() == null) {
-            lon = member.getLon();
-        }
-
-        if (memberUpdateReqDto.recommend() == null) {
-            recommend = member.getRecommend();
-        }
 
         MemberInfoResDto response = memberService.updateMember(loginMember.id(), lat, lon, recommend);
         return ResponseEntity.ok(response);
