@@ -12,6 +12,7 @@ public enum ErrorCode {
     EXPIRE_TOKEN(HttpStatus.UNAUTHORIZED, "만료된 토큰입니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "잘못된 토큰입니다."),
     EMPTY_AUTHORIZATION_HEADER(HttpStatus.BAD_REQUEST, "인증헤더가 비어있습니다."),
+    FAIL_READ_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "파일 읽기 작업이 실패했습니다.")
     ;
 
     private final HttpStatus status;
