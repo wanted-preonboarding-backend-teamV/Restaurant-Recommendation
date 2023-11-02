@@ -36,7 +36,7 @@ public class OpenApiService {
         List<OpenApiRawRestaurant> response = new ArrayList<>();
 
         while (true) {
-            log.info("Load restaurants from {} to {}...", (page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+            log.debug("Load restaurants from {} to {}...", (page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
             try {
                 String result = openApi.getRestaurantsInfo(serviceKey, "json", page, PAGE_SIZE, restaurantType.getPath());
                 OpenApiRawHead rawHead = rawConverter.convertToHead(result, restaurantType);
@@ -49,7 +49,7 @@ public class OpenApiService {
                 response.addAll(rawRestaurants);
 
                 if (page * PAGE_SIZE >= rawHead.getListTotalCount()) {
-                    log.info("All restaurants are loaded. (total {})", rawHead.getListTotalCount());
+                    log.debug("All restaurants are loaded. (total {})", rawHead.getListTotalCount());
                     break;
                 }
 
@@ -81,7 +81,7 @@ public class OpenApiService {
                         it.setLicenseDe(it.getLicenseDe() + "01");
                     }
                 }).toList();
-        log.info("Preprocessing is done. ({} of {})", results.size(), rawRestaurants.size());
+        log.debug("Preprocessing is done. ({} of {})", results.size(), rawRestaurants.size());
         return results;
     }
 
@@ -138,13 +138,13 @@ public class OpenApiService {
     }
 
     private boolean hasAllNotNullFields(OpenApiRawRestaurant raw) {
-        return !raw.getBsnStateNm().equals("폐업")
-                && raw.getSigunNm() != null && !raw.getSigunNm().isBlank()
+        return raw.getSigunNm() != null && !raw.getSigunNm().isBlank()
                 && raw.getBizplcNm() != null && !raw.getBizplcNm().isBlank()
                 && raw.getRefineRoadnmAddr() != null && !raw.getRefineRoadnmAddr().isBlank()
                 && raw.getRefineLotnoAddr() != null && !raw.getRefineLotnoAddr().isBlank()
                 && raw.getRefineZipCd() != null && !raw.getRefineZipCd().isBlank()
                 && raw.getRefineWgs84Lat() != null && !raw.getRefineWgs84Lat().isBlank()
-                && raw.getRefindWgs84Logt() != null && !raw.getRefindWgs84Logt().isBlank();
+                && raw.getRefindWgs84Logt() != null && !raw.getRefindWgs84Logt().isBlank()
+                && raw.getBsnStateNm() != null && !raw.getBsnStateNm().isBlank();
     }
 }

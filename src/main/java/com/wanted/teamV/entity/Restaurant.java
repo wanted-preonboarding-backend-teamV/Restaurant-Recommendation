@@ -98,4 +98,30 @@ public class Restaurant {
         this.sanittnIndutypeNm = sanittnIndutypeNm;
         this.totEmplyCnt = totEmplyCnt;
     }
+
+    public void update(Restaurant restaurant) {
+        this.sigun = restaurant.sigun == null? this.sigun : restaurant.sigun;
+        this.type = restaurant.type == null? this.type : restaurant.type;
+        this.lotAddress = restaurant.lotAddress == null? this.lotAddress : restaurant.lotAddress;
+        this.zipCode = restaurant.zipCode == null? this.zipCode : restaurant.zipCode;
+        this.lat = restaurant.lat == null? this.lat : restaurant.lat;
+        this.lon = restaurant.lon == null? this.lon : restaurant.lon;
+        this.averageRating = restaurant.averageRating == null? this.averageRating : restaurant.averageRating;
+        this.ratingList = restaurant.ratingList == null? this.ratingList : restaurant.ratingList;
+        this.bsnStateNm = restaurant.bsnStateNm == null? this.bsnStateNm : restaurant.bsnStateNm;
+        this.sigunCd = restaurant.sigunCd == null? this.sigunCd : restaurant.sigunCd;
+        this.licenseDe = restaurant.licenseDe == null? this.licenseDe : restaurant.licenseDe;
+        this.clsbizDe = restaurant.clsbizDe == null? this.clsbizDe : restaurant.clsbizDe;
+        this.locplcAr = restaurant.locplcAr == null? this.locplcAr : restaurant.locplcAr;
+        this.gradFacltDivNm = restaurant.gradFacltDivNm == null? this.gradFacltDivNm : restaurant.gradFacltDivNm;
+        this.maleEnflpsnCnt = restaurant.maleEnflpsnCnt == null? this.maleEnflpsnCnt : restaurant.maleEnflpsnCnt;
+        this.year = restaurant.year == null? this.year : restaurant.year;
+        this.multiUseBizestblYn = restaurant.multiUseBizestblYn == null? this.multiUseBizestblYn : restaurant.multiUseBizestblYn;
+        this.gradDivNm = restaurant.gradDivNm == null? this.gradDivNm : restaurant.gradDivNm;
+        this.totFacltScale = restaurant.totFacltScale == null? this.totFacltScale : restaurant.totFacltScale;
+        this.femaleEnflpsnCnt = restaurant.femaleEnflpsnCnt == null? this.femaleEnflpsnCnt : restaurant.femaleEnflpsnCnt;
+        this.circumfrDivNm = restaurant.circumfrDivNm == null? this.circumfrDivNm : restaurant.circumfrDivNm;
+        this.sanittnIndutypeNm = restaurant.sanittnIndutypeNm == null? this.sanittnIndutypeNm : restaurant.sanittnIndutypeNm;
+        this.totEmplyCnt = restaurant.totEmplyCnt == null? this.totEmplyCnt : restaurant.totEmplyCnt;
+    }
 }
