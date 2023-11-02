@@ -72,8 +72,6 @@ class RatingServiceImplTest {
     @DisplayName("평가 생성 - 실패")
     void createRating_Failure() {
         //given
-        long restaurantId = 2L;
-
         RatingCreateReqDto requestDto = RatingCreateReqDto.builder()
                 .restaurantId(1L)
                 .score(5)
