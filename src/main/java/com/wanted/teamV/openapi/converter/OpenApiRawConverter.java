@@ -19,25 +19,33 @@ public class OpenApiRawConverter {
 
     public OpenApiRawHead convertToHead(String raw, OpenApiRestaurantType restaurantType) throws JsonProcessingException {
         OpenApiRawHead response = new OpenApiRawHead();
-        Map<String, List<LinkedHashMap<String, Object>>> map = objectMapper.readValue(raw, new TypeReference<>() {});
-        List<LinkedHashMap<String, Object>> heads = (List<LinkedHashMap<String, Object>>) map.get(restaurantType.getPath()).get(0).get("head");
+        try {
+            Map<String, List<LinkedHashMap<String, Object>>> map = objectMapper.readValue(raw, new TypeReference<>() {});
+            List<LinkedHashMap<String, Object>> heads = (List<LinkedHashMap<String, Object>>) map.get(restaurantType.getPath()).get(0).get("head");
 
-        for (LinkedHashMap<String, Object> object : heads) {
-            if (object.containsKey("list_total_count")) {
-                response.setListTotalCount((Integer) object.get("list_total_count"));
+            for (LinkedHashMap<String, Object> object : heads) {
+                if (object.containsKey("list_total_count")) {
+                    response.setListTotalCount((Integer) object.get("list_total_count"));
+                }
+
+                if (object.containsKey("RESULT")) {
+                    LinkedHashMap<String, String> values = (LinkedHashMap<String, String>) object.get("RESULT");
+                    response.setResultCode(values.get("CODE"));
+                    response.setResultMessage(values.get("MESSAGE"));
+                }
+
+                if (object.containsKey("api_version")) {
+                    response.setApiVersion((String) object.get("api_version"));
+                }
             }
-
-            if (object.containsKey("RESULT")) {
-                LinkedHashMap<String, String> values = (LinkedHashMap<String, String>) object.get("RESULT");
+        } catch (JsonProcessingException ex) {
+            LinkedHashMap<String, LinkedHashMap<String, String>> result = objectMapper.readValue(raw, new TypeReference<>() {});
+            if (result.containsKey("RESULT")) {
+                LinkedHashMap<String, String> values = result.get("RESULT");
                 response.setResultCode(values.get("CODE"));
                 response.setResultMessage(values.get("MESSAGE"));
             }
-
-            if (object.containsKey("api_version")) {
-                response.setApiVersion((String) object.get("api_version"));
-            }
         }
-
         return response;
     }
 
