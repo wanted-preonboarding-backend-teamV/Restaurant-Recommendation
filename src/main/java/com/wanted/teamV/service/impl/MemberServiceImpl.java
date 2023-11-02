@@ -33,8 +33,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = Member.builder()
                 .account(memberJoinReqDto.account())
                 .password(encryptedPassword)
-                .lat(0D)
-                .lon(0D)
+                .lat(null)
+                .lon(null)
                 .build();
         memberRepository.save(member);
 
@@ -76,9 +76,26 @@ public class MemberServiceImpl implements MemberService {
     public MemberInfoResDto updateMember(Long memberId, Double lat, Double lon, Boolean recommend) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        if (lat == null) lat = member.getLat();
-        if (lon == null) lon = member.getLon();
-        if (recommend == null) recommend = member.getRecommend();
+        if (lat == null) {
+            if (member.getLat() != null) {
+                lat = member.getLat();
+            } else {
+                throw new CustomException(ErrorCode.NULL_LAT_VALUE);
+            }
+        }
+
+        if (lon == null) {
+            if (member.getLon() != null) {
+                lon = member.getLon();
+            } else {
+                throw new CustomException(ErrorCode.NULL_LON_VALUE);
+            }
+        }
+
+        recommend = (recommend == null) ? member.getRecommend() : recommend;
+
+        if (lat < 33 || lat > 43) throw new CustomException(ErrorCode.INVALID_LAT_RANGE);
+        if (lon < 124 || lon > 132) throw new CustomException(ErrorCode.INVALID_LON_RANGE);
 
         memberRepository.updateMemberFields(memberId, lat, lon, recommend);
 
