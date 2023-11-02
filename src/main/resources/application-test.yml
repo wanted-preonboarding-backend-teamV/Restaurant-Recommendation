@@ -11,11 +11,9 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        format_sql: true
         globally_quoted_identifiers: true
         jdbc:
           time_zone: Asia/Seoul
-    show-sql: true
 
   h2:
     console:
