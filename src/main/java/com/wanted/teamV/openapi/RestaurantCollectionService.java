@@ -22,8 +22,6 @@ public class RestaurantCollectionService {
 
     @Transactional
     public void collectAllRestaurants() {
-        int newCount = 0, duplicatedCount = 0;
-
         for (OpenApiRestaurantType restaurantType : OpenApiRestaurantType.values()) {
             try {
                 log.info("Collect restaurants ({})", restaurantType.getType());
@@ -31,22 +29,14 @@ public class RestaurantCollectionService {
                 List<OpenApiRawRestaurant> preprocessed = openApiService.preprocessRawData(rawRestaurants, restaurantType);
                 List<Restaurant> restaurants = openApiService.rawToRestaurants(preprocessed);
 
-                List<Restaurant> restaurantsForSave = restaurants.stream().filter(it ->
-                        restaurantRepository.findAllByNameAndRoadnameAddress(it.getName(), it.getRoadnameAddress())
-                                .isEmpty()
-                ).toList();
-
-                restaurantRepository.bulkInsert(restaurantsForSave);
-                log.info("Saving {} restaurants ({}) is done.", restaurantsForSave.size(), restaurantType.getType());
-
-                newCount += restaurantsForSave.size();
-                duplicatedCount += (restaurants.size() - restaurantsForSave.size());
+                restaurantRepository.bulkInsert(restaurants);
+                log.info("Saving restaurants ({}) is done.", restaurantType.getType());
             }
             catch (WebClientResponseException | JsonProcessingException ex) {
                 log.error("Cannot save restaurants ({}).", restaurantType.getType(), ex);
             }
         }
-        log.info("Restaurants are saved. (new: {}, duplicated: {})", newCount, duplicatedCount);
+        log.info("All Restaurants are saved.");
     }
 
 }
