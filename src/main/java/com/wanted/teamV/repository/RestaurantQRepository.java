@@ -5,6 +5,6 @@ import com.wanted.teamV.type.RestaurantType;
 
 import java.util.List;
 
-public interface CustomRestaurantRepository {
+public interface RestaurantQRepository {
     List<Restaurant> getRestaurants(int page, String restaurantName, RestaurantType restaurantType);
 }

@@ -1,8 +1,9 @@
-package com.wanted.teamV.repository;
+package com.wanted.teamV.repository.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.teamV.entity.Restaurant;
+import com.wanted.teamV.repository.RestaurantQRepository;
 import com.wanted.teamV.type.RestaurantType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import static com.wanted.teamV.type.RestaurantType.*;
 
 @Component
 @RequiredArgsConstructor
-public class QuerydslRestaurantRepository implements CustomRestaurantRepository {
+public class RestaurantQRepositoryImpl implements RestaurantQRepository {
     private static final int PAGE_SIZE = 10;
     private final JPAQueryFactory queryFactory;
 
