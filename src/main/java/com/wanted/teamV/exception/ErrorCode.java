@@ -18,6 +18,7 @@ public enum ErrorCode {
     NULL_LON_VALUE(HttpStatus.BAD_REQUEST, "경도 값이 비어있습니다."),
     INVALID_LAT_RANGE(HttpStatus.BAD_REQUEST, "위도 범위를 넘었습니다. (33 ~ 43)"),
     INVALID_LON_RANGE(HttpStatus.BAD_REQUEST, "경도 범위를 넘었습니다. (124 ~ 132)"),
+    INVALID_RESTAURANT_SORT_TYPE(HttpStatus.BAD_REQUEST, "정렬 값이 잘못되었습니다."),
     ;
 
     private final HttpStatus status;
