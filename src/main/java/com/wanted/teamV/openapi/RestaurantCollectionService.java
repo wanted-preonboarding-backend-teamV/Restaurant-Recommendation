@@ -6,6 +6,7 @@ import com.wanted.teamV.openapi.converter.OpenApiRawRestaurant;
 import com.wanted.teamV.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -19,7 +20,10 @@ public class RestaurantCollectionService {
     private final OpenApiService openApiService;
     private final RestaurantRepository restaurantRepository;
 
+    @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
     public void collectAllRestaurants() {
+        log.info("Schedule task is started: Load & Save Restaurants");
+
         for (OpenApiRestaurantType restaurantType : OpenApiRestaurantType.values()) {
             try {
                 log.info("Collect restaurants ({})", restaurantType.getType());
@@ -34,7 +38,8 @@ public class RestaurantCollectionService {
                 log.error("Cannot save restaurants ({}).", restaurantType.getType(), ex);
             }
         }
-        log.info("All Restaurants are saved.");
+
+        log.info("Schedule Task is done: Load & Save Restaurants");
     }
 
 }
