@@ -37,6 +37,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Set Yaml
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ./src/main/resources/application.yml
+        env:
+          openapi.service-key: ${{ secrets.SERVICE_KEY }}
+
       - name: Gradle 명령 실행을 위한 권한을 부여
         run: chmod +x gradlew
 
