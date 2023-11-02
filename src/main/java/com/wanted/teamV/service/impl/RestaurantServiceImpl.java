@@ -11,6 +11,7 @@ import com.wanted.teamV.repository.CustomRestaurantRepository;
 import com.wanted.teamV.repository.RestaurantRepository;
 import com.wanted.teamV.service.RestaurantService;
 import com.wanted.teamV.type.RestaurantOrdering;
+import com.wanted.teamV.type.RestaurantType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,10 +37,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<RestaurantResDto> getRestaurants(String lat, String lon, double range, String order, int page, String restaurantName, String restaurantType) {
         Coordinate coordinate = new Coordinate(Double.parseDouble(lat), Double.parseDouble(lon));
+        RestaurantType type = RestaurantType.toEnum(restaurantType);
         Map<Restaurant, Double> restaurants = new HashMap<>();
 
         //요청한 좌표 안에 있는 맛집 필터링
-        customRestaurantRepository.findRestaurants(page, restaurantName, restaurantType).forEach(restaurant -> {
+        customRestaurantRepository.getRestaurants(page, restaurantName, type).forEach(restaurant -> {
                     Coordinate restaurantCoordinate = new Coordinate(restaurant.getLat(), restaurant.getLon());
                     double distance = DistanceCalculator.calculate(coordinate, restaurantCoordinate); //km
 
