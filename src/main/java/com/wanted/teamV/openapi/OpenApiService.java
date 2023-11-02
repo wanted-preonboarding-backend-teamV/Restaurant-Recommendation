@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,14 +31,14 @@ public class OpenApiService {
     private final int PAGE_SIZE = 300; // API에서 한번에 불러올 맛집 개수. 최대 1000
 
     // OpenAPI에서 특정 업종에 속하는 음식점들의 데이터를 모두 불러온다.
-    public List<OpenApiRawRestaurant> getRawDataFromOpenapi(OpenApiRestaurantType restaurantType) {
+    public List<OpenApiRawRestaurant> getRawDataFromOpenapi(OpenApiRestaurantType restaurantType) throws WebClientResponseException, JsonProcessingException {
         int page = 1;
         List<OpenApiRawRestaurant> response = new ArrayList<>();
 
         while (true) {
             log.info("Load restaurants from {} to {}...", (page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
-            String result = openApi.getRestaurantsInfo(serviceKey, "json", page, PAGE_SIZE, restaurantType.getPath());
             try {
+                String result = openApi.getRestaurantsInfo(serviceKey, "json", page, PAGE_SIZE, restaurantType.getPath());
                 OpenApiRawHead rawHead = rawConverter.convertToHead(result, restaurantType);
                 if (!rawHead.getResultCode().equals("INFO-000")) {
                     log.error("OpenApi Call Error: ({}) {}", rawHead.getResultCode(), rawHead.getResultMessage());
@@ -54,8 +55,12 @@ public class OpenApiService {
 
                 page++;
 
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+            } catch (WebClientResponseException webEx) {
+                log.error("Cannot Get From Open API.");
+                throw webEx;
+            } catch (JsonProcessingException jsonEx) {
+                log.error("Cannot Parse Open API Result.");
+                throw jsonEx;
             }
         }
 
