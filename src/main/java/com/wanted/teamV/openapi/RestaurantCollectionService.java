@@ -20,26 +20,26 @@ public class RestaurantCollectionService {
 
     @Transactional
     public void collectAllRestaurants() {
+        int newCount = 0, duplicatedCount = 0;
+
         for (OpenApiRestaurantType restaurantType : OpenApiRestaurantType.values()) {
             log.info("Collect restaurants ({})", restaurantType.getType());
             List<OpenApiRawRestaurant> rawRestaurants = openApiService.getRawDataFromOpenapi(restaurantType);
             List<OpenApiRawRestaurant> preprocessed = openApiService.preprocessRawData(rawRestaurants, restaurantType);
             List<Restaurant> restaurants = openApiService.rawToRestaurants(preprocessed);
 
-            List<Restaurant> restaurantsForSave = restaurants.stream().filter(it -> {
-                List<Restaurant> restaurantOptional = restaurantRepository.findAllByNameAndRoadnameAddress(
-                        it.getName(), it.getRoadnameAddress());
-                if (!restaurantOptional.isEmpty()) {
-                    log.warn("Duplicate restaurant: {} ({})", it.getName(), it.getRoadnameAddress());
-                    return false;
-                } else {
-                    return true;
-                }
-            }).toList();
+            List<Restaurant> restaurantsForSave = restaurants.stream().filter(it ->
+                restaurantRepository.findAllByNameAndRoadnameAddress(it.getName(), it.getRoadnameAddress())
+                        .isEmpty()
+            ).toList();
+            newCount += restaurantsForSave.size();
+            duplicatedCount += (restaurants.size() - restaurantsForSave.size());
 
-            restaurantRepository.saveAll(restaurantsForSave);
+            restaurantRepository.bulkInsert(restaurantsForSave);
             log.info("Saving {} restaurants ({}) is done.", restaurantsForSave.size(), restaurantType.getType());
         }
+
+        log.info("All Restaurants are saved. (new: {}, duplicated: {})", newCount, duplicatedCount);
     }
 
 }

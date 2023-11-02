@@ -27,14 +27,16 @@ public class OpenApiService {
     @Value("${openapi.service-key}")
     private String serviceKey;
 
+    private final int PAGE_SIZE = 300; // API에서 한번에 불러올 맛집 개수. 최대 1000
+
     // OpenAPI에서 특정 업종에 속하는 음식점들의 데이터를 모두 불러온다.
     public List<OpenApiRawRestaurant> getRawDataFromOpenapi(OpenApiRestaurantType restaurantType) {
-        int page = 1, size = 100;
+        int page = 1;
         List<OpenApiRawRestaurant> response = new ArrayList<>();
 
         while (true) {
-            log.info("Load restaurants from {} to {}...", (page - 1) * size, page * size - 1);
-            String result = openApi.getRestaurantsInfo(serviceKey, "json", page, size, restaurantType.getPath());
+            log.info("Load restaurants from {} to {}...", (page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+            String result = openApi.getRestaurantsInfo(serviceKey, "json", page, PAGE_SIZE, restaurantType.getPath());
             try {
                 OpenApiRawHead rawHead = rawConverter.convertToHead(result, restaurantType);
                 if (!rawHead.getResultCode().equals("INFO-000")) {
@@ -45,7 +47,7 @@ public class OpenApiService {
                 List<OpenApiRawRestaurant> rawRestaurants = rawConverter.convertToRestaurants(result, restaurantType);
                 response.addAll(rawRestaurants);
 
-                if (page * size >= rawHead.getListTotalCount()) {
+                if (page * PAGE_SIZE >= rawHead.getListTotalCount()) {
                     log.info("All restaurants are loaded. (total {})", rawHead.getListTotalCount());
                     break;
                 }
