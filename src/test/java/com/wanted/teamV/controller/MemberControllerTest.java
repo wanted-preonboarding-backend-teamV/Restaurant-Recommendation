@@ -3,6 +3,7 @@ package com.wanted.teamV.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanted.teamV.dto.req.MemberJoinReqDto;
 import com.wanted.teamV.dto.req.MemberLoginReqDto;
+import com.wanted.teamV.dto.res.MemberInfoResDto;
 import com.wanted.teamV.dto.res.MemberTokenResDto;
 import com.wanted.teamV.entity.Member;
 import com.wanted.teamV.exception.CustomException;
@@ -17,11 +18,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -115,5 +116,32 @@ class MemberControllerTest {
                 .andExpect(status().isBadRequest())
                 .andDo(print());
 
+    }
+
+    @Test
+    @DisplayName("조회 - 성공")
+    public void getMember() throws Exception {
+        //given
+        MemberLoginReqDto request = new MemberLoginReqDto("test1234", "test1234!@#$");
+        MemberTokenResDto tokenResponse = new MemberTokenResDto("123456789qwerttyadsccvzzsadwdqadwa.asddwdad");
+
+        MemberInfoResDto response = MemberInfoResDto.builder()
+                .id(1L)
+                .account("test1234")
+                .lat(null)
+                .lon(null)
+                .recommend(true)
+                .build();
+
+        when(memberService.login(request)).thenReturn(tokenResponse);
+        when(memberService.getMember(anyLong())).thenReturn(response);
+
+        //when & then
+        mockMvc.perform(get("/members")
+                        .header("Authorization", "Bearer " + tokenResponse.accessToken())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 }

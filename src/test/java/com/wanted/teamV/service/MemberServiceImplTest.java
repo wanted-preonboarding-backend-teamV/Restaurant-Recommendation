@@ -2,6 +2,7 @@ package com.wanted.teamV.service;
 
 import com.wanted.teamV.dto.req.MemberJoinReqDto;
 import com.wanted.teamV.dto.req.MemberLoginReqDto;
+import com.wanted.teamV.dto.res.MemberInfoResDto;
 import com.wanted.teamV.dto.res.MemberTokenResDto;
 import com.wanted.teamV.entity.Member;
 import com.wanted.teamV.exception.CustomException;
@@ -17,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class MemberServiceImplTest {
@@ -77,6 +82,7 @@ class MemberServiceImplTest {
 
     @Test
     @DisplayName("로그인 - 성공")
+    @Transactional
     public void login() throws Exception {
         //given
         Member member = Member.testMemberEntity();
@@ -110,5 +116,25 @@ class MemberServiceImplTest {
         //then
         CustomException exception = assertThrows(CustomException.class, () -> memberService.login(request));
         assertEquals(ErrorCode.INVALID_PASSWORD, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("조회 - 성공")
+    public void getMember() throws Exception {
+        //given
+        Member member = Member.testMemberEntity();
+
+        when(memberRepository.findById(1L)).thenReturn(Optional.of(member));
+
+        //when
+        MemberInfoResDto response = memberService.getMember(1L);
+
+        //then
+        assertEquals(member.getId(), response.getId());
+        assertEquals(member.getAccount(), response.getAccount());
+        assertEquals(member.getLat(), response.getLat());
+        assertEquals(member.getLon(), response.getLon());
+        assertEquals(member.getRecommend(), response.getRecommend());
+
     }
 }
