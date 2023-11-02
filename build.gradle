@@ -43,6 +43,9 @@ dependencies {
 
 	// WebFlux for WebClient
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// For test Scheduling
+	testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
 // Querydsl 설정부
