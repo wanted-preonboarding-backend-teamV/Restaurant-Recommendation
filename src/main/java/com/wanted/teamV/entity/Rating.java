@@ -46,4 +46,12 @@ public class Rating {
         this.content = content;
         this.createdAt = createdAt;
     }
+
+    public Long getMemberId() {
+        return member.getId();
+    }
+
+    public Long getRestaurantId() {
+        return restaurant.getId();
+    }
 }
