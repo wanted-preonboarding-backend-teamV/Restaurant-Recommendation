@@ -17,3 +17,10 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
+
+security:
+  jwt:
+    token:
+      secret-key: ${JWT_SECRET_KEY}
+      access:
+        expire-length: 2592000000 #30일

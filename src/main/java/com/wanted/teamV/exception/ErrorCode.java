@@ -13,6 +13,11 @@ public enum ErrorCode {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "잘못된 토큰입니다."),
     EMPTY_AUTHORIZATION_HEADER(HttpStatus.BAD_REQUEST, "인증헤더가 비어있습니다."),
     FAIL_READ_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "파일 읽기 작업이 실패했습니다."),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."),
+    NULL_LAT_VALUE(HttpStatus.BAD_REQUEST, "위도 값이 비어있습니다."),
+    NULL_LON_VALUE(HttpStatus.BAD_REQUEST, "경도 값이 비어있습니다."),
+    INVALID_LAT_RANGE(HttpStatus.BAD_REQUEST, "위도 범위를 넘었습니다. (33 ~ 43)"),
+    INVALID_LON_RANGE(HttpStatus.BAD_REQUEST, "경도 범위를 넘었습니다. (124 ~ 132)"),
     INVALID_RESTAURANT_SORT_TYPE(HttpStatus.BAD_REQUEST, "정렬 값이 잘못되었습니다."),
     ;
 
