@@ -28,7 +28,7 @@ public class RestaurantJdbcRepositoryImpl implements RestaurantJdbcRepository {
     }
 
     private void insert(List<Restaurant> restaurants) {
-        String sql = "INSERT INTO restaurant (" +
+        String sql = "INSERT IGNORE INTO restaurant (" +
                 "name, sigun, type, roadname_address, lot_address, zip_code, lat, lon, average_rating, BSN_STATE_NM, " +
                 "SIGUN_CD, LICENSE_DE, CLSBIZ_DE, LOCPLC_AR, GRAD_FACLT_DIV_NM, MALE_ENFLPSN_CNT, year, " +
                 "MULTI_USE_BIZESTBL_YN, GRAD_DIV_NM, TOT_FACLT_SCALE, FEMALE_ENFLPSN_CNT, " +
@@ -43,8 +43,8 @@ public class RestaurantJdbcRepositoryImpl implements RestaurantJdbcRepository {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 Restaurant restaurant = restaurants.get(i);
-                String licenseDe = restaurant.getLicenseDe() == null? null : restaurant.getLicenseDe().format(formatter);
-                String clsbizDe = restaurant.getClsbizDe() == null? null : restaurant.getClsbizDe().format(formatter);
+                String licenseDe = restaurant.getLicenseDe() == null ? null : restaurant.getLicenseDe().format(formatter);
+                String clsbizDe = restaurant.getClsbizDe() == null ? null : restaurant.getClsbizDe().format(formatter);
 
                 ps.setString(1, restaurant.getName());
                 ps.setString(2, restaurant.getSigun());
