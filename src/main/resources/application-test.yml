@@ -24,3 +24,10 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+security:
+  jwt:
+    token:
+      secret-key: dGVhbXZfand0X3NlY3JldF9rZXlfdGVzdA==
+      access:
+        expire-length: 2592000000 #30일

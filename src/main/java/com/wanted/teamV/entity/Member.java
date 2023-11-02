@@ -35,4 +35,15 @@ public class Member {
         this.lat = lat;
         this.lon = lon;
     }
+
+    public static Member testMemberEntity() {
+        Member member = new Member();
+        member.id = 1L;
+        member.account = "test1234";
+        member.password = "hashedPassword";
+        member.lat = null;
+        member.lon = null;
+        member.recommend = false;
+        return member;
+    }
 }
