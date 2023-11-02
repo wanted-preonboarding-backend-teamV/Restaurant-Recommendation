@@ -137,4 +137,122 @@ class MemberServiceImplTest {
         assertEquals(member.getRecommend(), response.getRecommend());
 
     }
+
+    @Test
+    @DisplayName("설정 업데이트 - 성공")
+    public void updateMember() throws Exception {
+        //given
+        Double updatedLat = 36.123456;
+        Double updatedLon = 127.123345;
+        Boolean updatedRecommend = true;
+
+        Member member = Member.builder()
+                .account("test1234")
+                .password("test1234!@#$")
+                .lat(null)
+                .lon(null)
+                .build();
+
+        when(memberRepository.findById(member.getId())).thenReturn(Optional.of(member));
+
+        //when
+        MemberInfoResDto updateResponse = memberService.updateMember(member.getId(), updatedLat, updatedLon, updatedRecommend);
+
+        //then
+        assertNotNull(updateResponse);
+        assertEquals(member.getId(), updateResponse.getId());
+        assertEquals(updatedLat, updateResponse.getLat());
+        assertEquals(updatedLon, updateResponse.getLon());
+        assertEquals(updatedRecommend, updateResponse.getRecommend());
+
+        verify(memberRepository).updateMemberFields(eq(member.getId()), eq(updatedLat), eq(updatedLon), eq(updatedRecommend));
+    }
+
+    @Test
+    @DisplayName("설정 업데이트 - 실패(위도가 비어있을 경우")
+    public void updateMember_null_rat() throws Exception {
+        //given
+        Double updatedLat = null;
+        Double updatedLon = 127.123345;
+        Boolean updatedRecommend = true;
+
+        Member member = Member.builder()
+                .account("test1234")
+                .password("test1234!@#$")
+                .lat(null)
+                .lon(null)
+                .build();
+
+        when(memberRepository.findById(member.getId())).thenReturn(Optional.of(member));
+
+        //when & then
+        CustomException exception = assertThrows(CustomException.class, () -> memberService.updateMember(member.getId(), updatedLat, updatedLon, updatedRecommend));
+        assertEquals(ErrorCode.NULL_LAT_VALUE, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("설정 업데이트 - 실패(경도가 비어있을 경우")
+    public void updateMember_null_lon() throws Exception {
+        //given
+        Double updatedLat = 36.123464;
+        Double updatedLon = null;
+        Boolean updatedRecommend = true;
+
+        Member member = Member.builder()
+                .account("test1234")
+                .password("test1234!@#$")
+                .lat(null)
+                .lon(null)
+                .build();
+
+        when(memberRepository.findById(member.getId())).thenReturn(Optional.of(member));
+
+        //when & then
+        CustomException exception = assertThrows(CustomException.class, () -> memberService.updateMember(member.getId(), updatedLat, updatedLon, updatedRecommend));
+        assertEquals(ErrorCode.NULL_LON_VALUE, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("설정 업데이트 - 실패(위도 범위를 벗어난 경우")
+    public void updateMember_invalid_rat_range() throws Exception {
+        //given
+        Double updatedLat = 20.0;
+        Double updatedLon = 127.123345;
+        Boolean updatedRecommend = true;
+
+        Member member = Member.builder()
+                .account("test1234")
+                .password("test1234!@#$")
+                .lat(null)
+                .lon(null)
+                .build();
+
+        when(memberRepository.findById(member.getId())).thenReturn(Optional.of(member));
+
+        //when & then
+        CustomException exception = assertThrows(CustomException.class, () -> memberService.updateMember(member.getId(), updatedLat, updatedLon, updatedRecommend));
+        assertEquals(ErrorCode.INVALID_LAT_RANGE, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("설정 업데이트 - 실패(경도 범위를 벗어난 경우")
+    public void updateMember_invalid_lon_range() throws Exception {
+        //given
+        Double updatedLat = 36.123451;
+        Double updatedLon = 1000.0;
+        Boolean updatedRecommend = true;
+
+        Member member = Member.builder()
+                .account("test1234")
+                .password("test1234!@#$")
+                .lat(null)
+                .lon(null)
+                .build();
+
+        when(memberRepository.findById(member.getId())).thenReturn(Optional.of(member));
+
+        //when & then
+        CustomException exception = assertThrows(CustomException.class, () -> memberService.updateMember(member.getId(), updatedLat, updatedLon, updatedRecommend));
+        assertEquals(ErrorCode.INVALID_LON_RANGE, exception.getErrorCode());
+    }
 }
