@@ -29,10 +29,10 @@ public class RestaurantJdbcRepositoryImpl implements RestaurantJdbcRepository {
 
     private void insert(List<Restaurant> restaurants) {
         String sql = "INSERT IGNORE INTO restaurant (" +
-                "name, sigun, type, roadname_address, lot_address, zip_code, lat, lon, average_rating, BSN_STATE_NM, " +
-                "SIGUN_CD, LICENSE_DE, CLSBIZ_DE, LOCPLC_AR, GRAD_FACLT_DIV_NM, MALE_ENFLPSN_CNT, year, " +
-                "MULTI_USE_BIZESTBL_YN, GRAD_DIV_NM, TOT_FACLT_SCALE, FEMALE_ENFLPSN_CNT, " +
-                "CIRCUMFR_DIV_NM, SANITTN_INDUTYPE_NM, TOT_EMPLY_CNT" +
+                "name, sigun, type, roadname_address, lot_address, zip_code, lat, lon, average_rating, bsn_state_nm, " +
+                "sigun_cd, license_de, clsbiz_de, locplc_ar, grad_faclt_div_nm, male_enflpsn_cnt, year, " +
+                "multi_use_bizestbl_yn, grad_div_nm, tot_faclt_scale, female_enflpsn_cnt, " +
+                "circumfr_div_nm, sanittn_indutype_nm, tot_emply_cnt" +
                 ") VALUES (" +
                 "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?" +
                 ")";
