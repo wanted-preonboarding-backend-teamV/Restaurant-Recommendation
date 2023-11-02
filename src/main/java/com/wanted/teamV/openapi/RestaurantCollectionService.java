@@ -30,7 +30,7 @@ public class RestaurantCollectionService {
      * 매일 새벽 2시에 실행됨
      * 기존 식당이 폐업한 경우에는 DB에서 삭제한다 (리뷰도 모두 삭제)
      */
-    @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "${schedules.cron.restaurant-collection}", zone = "Asia/Seoul")
     public void collectAllRestaurants() {
         log.info("** Schedule task is started: Load & Save Restaurants **");
 

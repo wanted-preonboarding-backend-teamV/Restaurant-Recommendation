@@ -28,3 +28,7 @@ security:
 openapi:
   base-url: https://openapi.gg.go.kr
   service-key: ${SERVICE_KEY}
+
+schedules:
+  cron:
+    restaurant-collection: 0 0 2 * * *
