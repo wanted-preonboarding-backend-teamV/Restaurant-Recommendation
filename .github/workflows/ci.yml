@@ -40,7 +40,7 @@ jobs:
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
         with:
-          files: ./src/main/resources/application.yml
+          files: ./src/main/resources/application-test.yml
         env:
           openapi.service-key: ${{ secrets.SERVICE_KEY }}
 
