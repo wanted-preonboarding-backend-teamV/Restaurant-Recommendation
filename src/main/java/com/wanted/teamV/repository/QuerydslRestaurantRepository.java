@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static com.wanted.teamV.entity.QRestaurant.restaurant;
+import static com.wanted.teamV.type.RestaurantType.*;
 
 @Component
 @RequiredArgsConstructor
@@ -29,10 +30,10 @@ public class QuerydslRestaurantRepository implements CustomRestaurantRepository 
 
     private BooleanExpression filterRestaurantType(RestaurantType type) {
         return switch (type) {
-            case FAST_FOOD -> restaurant.sanittnIndutypeNm.eq("패스트푸드");
-            case LUNCH_BOX -> restaurant.sanittnIndutypeNm.eq("김밥(도시락)");
-            case CHINESE -> restaurant.sanittnIndutypeNm.eq("중국식");
-            case JAPANESE -> restaurant.sanittnIndutypeNm.eq("일식");
+            case FAST_FOOD -> restaurant.sanittnIndutypeNm.eq(FAST_FOOD.getType());
+            case LUNCH_BOX -> restaurant.sanittnIndutypeNm.eq(LUNCH_BOX.getType());
+            case CHINESE -> restaurant.sanittnIndutypeNm.eq(CHINESE.getType());
+            case JAPANESE -> restaurant.sanittnIndutypeNm.eq(JAPANESE.getType());
         };
     }
 }

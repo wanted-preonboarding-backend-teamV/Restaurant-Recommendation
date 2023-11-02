@@ -1,7 +1,10 @@
 package com.wanted.teamV.type;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
+@Getter
 public enum RestaurantType {
     FAST_FOOD("패스트푸드"),
     CHINESE("중국식"),
