@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
-    @Query(value = "SELECT AVG(r.score) FROM Rating r WHERE r.restaurant_id = :restaurantId", nativeQuery = true)
+    @Query("SELECT AVG(r.score) FROM Rating r WHERE r.restaurant.id = :restaurantId")
     Double calculateAverageRatingByRestaurant(@Param("restaurantId") Long restaurantId);
 
 }
