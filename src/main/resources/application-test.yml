@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:restaurant_teamv_test?serverTimezone=Asia/Seoul;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:restaurant_teamv_test?serverTimezone=Asia/Seoul;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;NON_KEYWORDS=year;
     driver-class-name: org.h2.Driver
     username: sa
   jpa:
@@ -11,10 +11,9 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        format_sql: true
+        globally_quoted_identifiers: true
         jdbc:
           time_zone: Asia/Seoul
-    show-sql: true
 
   h2:
     console:
@@ -31,3 +30,11 @@ security:
       secret-key: dGVhbXZfand0X3NlY3JldF9rZXlfdGVzdA==
       access:
         expire-length: 2592000000 #30일
+
+openapi:
+  base-url: https://openapi.gg.go.kr
+  service-key: ${SERVICE_KEY}
+
+schedules:
+  cron:
+    restaurant-collection: 0 0 2 * * *

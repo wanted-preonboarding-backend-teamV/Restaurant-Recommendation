@@ -24,3 +24,11 @@ security:
       secret-key: ${JWT_SECRET_KEY}
       access:
         expire-length: 2592000000 #30일
+
+openapi:
+  base-url: https://openapi.gg.go.kr
+  service-key: ${SERVICE_KEY}
+
+schedules:
+  cron:
+    restaurant-collection: 0 0 2 * * *
