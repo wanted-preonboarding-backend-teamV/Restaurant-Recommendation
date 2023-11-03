@@ -9,9 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, RestaurantJdbcRepository {
+    List<Restaurant> findAllByNameAndRoadnameAddress(String name, String roadnameAddress);
 
     @Query("SELECT r FROM Restaurant r join fetch r.ratingList WHERE r.id = :id")
     Optional<Restaurant> findByIdWithRatingsUsingFetchJoin(@Param("id") Long id);

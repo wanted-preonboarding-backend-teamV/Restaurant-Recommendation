@@ -14,7 +14,6 @@ spring:
         globally_quoted_identifiers: true
         jdbc:
           time_zone: Asia/Seoul
-    show-sql: true
 
   h2:
     console:
@@ -31,3 +30,11 @@ security:
       secret-key: dGVhbXZfand0X3NlY3JldF9rZXlfdGVzdA==
       access:
         expire-length: 2592000000 #30일
+
+openapi:
+  base-url: https://openapi.gg.go.kr
+  service-key: ${SERVICE_KEY}
+
+schedules:
+  cron:
+    restaurant-collection: 0 0 2 * * *
