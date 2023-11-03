@@ -10,6 +10,7 @@ import com.wanted.teamV.repository.MemberRepository;
 import com.wanted.teamV.repository.RatingRepository;
 import com.wanted.teamV.repository.RestaurantRepository;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,6 +44,7 @@ class RatingServiceImplTest {
     void createRating_Success() {
         //given
         long restaurantId = 1L;
+        long memberId = 1L;
 
         RatingCreateReqDto requestDto = RatingCreateReqDto.builder()
                 .restaurantId(1L)
@@ -60,7 +62,7 @@ class RatingServiceImplTest {
         when(ratingRepository.calculateAverageRatingByRestaurant(mockRestaurant.getId())).thenReturn((double) requestDto.getScore());
 
         //when
-        ratingService.createRating(requestDto);
+        ratingService.createRating(memberId, requestDto);
 
         //then
         verify(ratingRepository, times(1)).save(any(Rating.class));
@@ -68,24 +70,45 @@ class RatingServiceImplTest {
         assertEquals(5.0, ratingRepository.calculateAverageRatingByRestaurant(mockRestaurant.getId()));
     }
 
-    @Test
+    @Nested
     @DisplayName("평가 생성 - 실패")
-    void createRating_Failure() {
-        //given
-        RatingCreateReqDto requestDto = RatingCreateReqDto.builder()
-                .restaurantId(1L)
-                .score(5)
-                .content("맛있어요!")
-                .build();
+    class createRatingFailure {
+        @Test
+        @DisplayName("음식점이 존재하지 않을 때")
+        void createRating_RestaurantNotFound() {
+            //given
+            RatingCreateReqDto requestDto = RatingCreateReqDto.builder()
+                    .restaurantId(1L)
+                    .score(5)
+                    .content("맛있어요!")
+                    .build();
 
-        Member mockMember = mock(Member.class);
+            Member mockMember = mock(Member.class);
 
-        when(memberRepository.findById(anyLong())).thenReturn(Optional.of(mockMember));
-        when(restaurantRepository.findById(anyLong())).thenReturn(Optional.empty());
+            when(memberRepository.findById(anyLong())).thenReturn(Optional.of(mockMember));
+            when(restaurantRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        //when & then
-        CustomException exception = assertThrows(CustomException.class, () -> ratingService.createRating(requestDto));
-        assertEquals(ErrorCode.RESTAURANT_NOT_FOUND, exception.getErrorCode());
+            //when & then
+            CustomException exception = assertThrows(CustomException.class, () -> ratingService.createRating(anyLong(), requestDto));
+            assertEquals(ErrorCode.RESTAURANT_NOT_FOUND, exception.getErrorCode());
+        }
+
+        @Test
+        @DisplayName("Member가 존재하지 않을 때")
+        void createRating_MemberNotFound() {
+            // given
+            RatingCreateReqDto requestDto = RatingCreateReqDto.builder()
+                    .restaurantId(1L)
+                    .score(5)
+                    .content("맛있어요!")
+                    .build();
+
+            when(memberRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+            // when & then
+            CustomException exception = assertThrows(CustomException.class, () -> ratingService.createRating(1L, requestDto));
+            assertEquals(ErrorCode.INVALID_REQUEST, exception.getErrorCode());
+        }
     }
 
 }
