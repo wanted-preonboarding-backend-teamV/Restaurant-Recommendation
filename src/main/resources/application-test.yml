@@ -12,6 +12,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        auto_quote_keyword: true
         jdbc:
           time_zone: Asia/Seoul
     show-sql: true
