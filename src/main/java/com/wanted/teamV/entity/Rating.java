@@ -42,6 +42,7 @@ public class Rating {
     public Rating(Member member, Restaurant restaurant, int score, String content, LocalDateTime createdAt) {
         this.member = member;
         this.restaurant = restaurant;
+        restaurant.addRating(this);
         this.score = score;
         this.content = content;
         this.createdAt = createdAt;
