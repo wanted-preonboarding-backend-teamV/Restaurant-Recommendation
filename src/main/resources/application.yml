@@ -31,4 +31,14 @@ openapi:
 
 schedules:
   cron:
-    restaurant-collection: 0 0 2 * * *
+    restaurant-collection: 0 10 5 * * *
+
+discord:
+  bot: teamV
+  webhook:
+    url: ${WEBHOOK_URL}
+    avartar_url: ${AVARTAR_URL}
+    author_url: ${AUTHOR_URL}
+    author_icon: ${AUTHOR_ICON}
+    footer_icon: ${FOOTER_ICON}
+
