@@ -43,7 +43,7 @@ schedules:
 discord:
   bot: teamV
   webhook:
-    test_url: ${WEBHOOK_TEST_URL}
+    url: ${WEBHOOK_TEST_URL}
     avatar_url: ${AVATAR_URL}
     author_url: ${AUTHOR_URL}
     author_icon: ${AUTHOR_ICON}
