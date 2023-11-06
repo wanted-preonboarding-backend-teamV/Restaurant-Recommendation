@@ -1,24 +1,16 @@
 package com.wanted.teamV.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wanted.teamV.dto.LoginMember;
+import com.wanted.teamV.common.ControllerTest;
 import com.wanted.teamV.dto.req.MemberJoinReqDto;
 import com.wanted.teamV.dto.req.MemberLoginReqDto;
 import com.wanted.teamV.dto.req.MemberUpdateReqDto;
 import com.wanted.teamV.dto.res.MemberInfoResDto;
 import com.wanted.teamV.dto.res.MemberTokenResDto;
-import com.wanted.teamV.entity.Member;
 import com.wanted.teamV.exception.CustomException;
 import com.wanted.teamV.exception.ErrorCode;
-import com.wanted.teamV.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doThrow;
@@ -27,18 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureMockMvc
-@WebMvcTest({MemberController.class})
-class MemberControllerTest {
-
-    @Autowired
-    protected MockMvc mockMvc;
-
-    @Autowired
-    protected ObjectMapper objectMapper;
-
-    @MockBean
-    protected MemberService memberService;
+class MemberControllerTest extends ControllerTest {
 
     @Test
     @DisplayName("회원가입 - 성공")

@@ -1,10 +1,12 @@
 package com.wanted.teamV.dto.res;
 
 import com.wanted.teamV.entity.Restaurant;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 public record RestaurantDetailResDto(
         String name,
         String sigun,
