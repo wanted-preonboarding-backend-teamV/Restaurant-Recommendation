@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, RestaurantJdbcRepository {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, RestaurantJdbcRepository, RestaurantQRepository {
     List<Restaurant> findAllByNameAndRoadnameAddress(String name, String roadnameAddress);
 
     @Query("SELECT r FROM Restaurant r join fetch r.ratingList WHERE r.id = :id")
