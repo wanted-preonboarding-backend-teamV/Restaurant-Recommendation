@@ -53,7 +53,7 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
     // 사용자로부터 거리가 500미터 이내인 음식점을 평균 평점이 높은 순서대로 최대 5개 까지 반환
     @Override
     public List<Restaurant> findRecommendRestaurants(Double memberLat, Double memberLon) {
-        double distanceInKm = 0.5; // 500미터 근처
+        double distanceInKm = 1; // 1km 근처
 
         List<Restaurant> recommendedRestaurants = new ArrayList<>();
 
