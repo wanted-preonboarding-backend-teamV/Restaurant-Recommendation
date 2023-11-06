@@ -36,7 +36,7 @@ class DiscordWebhookServiceImplTest {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<DiscordWebhookReqDto> message = new HttpEntity<>(request, httpHeaders);
-        ResponseEntity<String> response = new ResponseEntity<>("message", HttpStatus.OK);
+        ResponseEntity<String> response = new ResponseEntity<>("message", HttpStatus.NO_CONTENT);
 
         when(restTemplate.exchange(webhookUrl, HttpMethod.POST, message, String.class))
                 .thenReturn(response);
