@@ -41,7 +41,7 @@ public class RecommendationScheduler {
     @Transactional(readOnly = true)
     public void sendRecommendations() {
         // 점심 추천에 동의한 모든 사용자 가져오기
-        List<Member> members = memberRepository.getAllMembersAgreedRecommendation();
+        List<Member> members = memberRepository.findAllByRecommendTrue();
 
         members.forEach(member -> {
             // 사용자에게 해당하는 메세지 생성
