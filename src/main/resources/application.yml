@@ -37,7 +37,7 @@ discord:
   bot: teamV
   webhook:
     url: ${WEBHOOK_URL}
-    avartar_url: ${AVARTAR_URL}
+    avatar_url: ${AVATAR_URL}
     author_url: ${AUTHOR_URL}
     author_icon: ${AUTHOR_ICON}
     footer_icon: ${FOOTER_ICON}

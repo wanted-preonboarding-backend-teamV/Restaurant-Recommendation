@@ -25,17 +25,17 @@ public class RecommendationScheduler {
     private final MemberRepository memberRepository;
     private final DiscordWebhookService discordWebhookService;
 
-    @Value("${discord.bot.webhook.avartar_url}")
-    private final String AVARTAR_URL;
+    @Value("${discord.webhook.avatar_url}")
+    private String AVATAR_URL;
 
-    @Value("${discord.bot.webhook.author_url}")
-    private final String AUTHOR_URL;
+    @Value("${discord.webhook.author_url}")
+    private String AUTHOR_URL;
 
-    @Value("${discord.bot.webhook.author_icon}")
-    private final String AUTHOR_ICON;
+    @Value("${discord.webhook.author_icon}")
+    private String AUTHOR_ICON;
 
-    @Value("${discord.bot.webhook.footer_icon}")
-    private final String FOOTER_ICON;
+    @Value("${discord.webhook.footer_icon}")
+    private String FOOTER_ICON;
 
     @Scheduled(cron = "0 30 11 * * ?")
     @Transactional(readOnly = true)
@@ -65,7 +65,7 @@ public class RecommendationScheduler {
     private DiscordWebhookReqDto createRequest(Member member) {
         return DiscordWebhookReqDto.builder()
                 .content(member.getAccount() + "님! 오늘도 즐거운 점심시간 보내세요!")
-                .avatarUrl(AVARTAR_URL)
+                .avatarUrl(AVATAR_URL)
                 .embeds(new ArrayList<>())
                 .build();
     }
