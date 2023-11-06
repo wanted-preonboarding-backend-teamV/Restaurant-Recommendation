@@ -44,6 +44,7 @@ jobs:
         env:
           openapi.service-key: ${{ secrets.SERVICE_KEY }}
           discord.webhook.url: ${{ secrets.WEBHOOK_URL }}
+          discord.webhook.test_url: ${{ secrets.WEBHOOK_TEST_URL }}
           discord.webhook.avatar_url: ${{ secrets.AVATAR_URL }}
           discord.webhook.author_url: ${{ secrets.AUTHOR_URL }}
           discord.webhook.author_icon: ${{ secrets.AUTHOR_ICON }}
