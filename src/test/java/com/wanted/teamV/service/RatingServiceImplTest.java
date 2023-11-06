@@ -1,4 +1,4 @@
-package com.wanted.teamV.service.impl;
+package com.wanted.teamV.service;
 
 import com.wanted.teamV.dto.req.RatingCreateReqDto;
 import com.wanted.teamV.entity.Member;
@@ -9,6 +9,7 @@ import com.wanted.teamV.exception.ErrorCode;
 import com.wanted.teamV.repository.MemberRepository;
 import com.wanted.teamV.repository.RatingRepository;
 import com.wanted.teamV.repository.RestaurantRepository;
+import com.wanted.teamV.service.impl.RatingServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
