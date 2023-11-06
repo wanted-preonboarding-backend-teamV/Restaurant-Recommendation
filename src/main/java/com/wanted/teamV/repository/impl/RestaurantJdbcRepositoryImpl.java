@@ -30,7 +30,7 @@ public class RestaurantJdbcRepositoryImpl implements RestaurantJdbcRepository {
     private void insert(List<Restaurant> restaurants) {
         String sql = "INSERT IGNORE INTO restaurant (" +
                 "name, sigun, type, roadname_address, lot_address, zip_code, lat, lon, average_rating, bsn_state_nm, " +
-                "sigun_cd, license_de, clsbiz_de, locplc_ar, grad_faclt_div_nm, male_enflpsn_cnt, year, " +
+                "sigun_cd, license_de, clsbiz_de, locplc_ar, grad_faclt_div_nm, male_enflpsn_cnt, yy, " +
                 "multi_use_bizestbl_yn, grad_div_nm, tot_faclt_scale, female_enflpsn_cnt, " +
                 "circumfr_div_nm, sanittn_indutype_nm, tot_emply_cnt" +
                 ") VALUES (" +
@@ -74,10 +74,10 @@ public class RestaurantJdbcRepositoryImpl implements RestaurantJdbcRepository {
                     ps.setInt(16, restaurant.getMaleEnflpsnCnt());
                 }
 
-                if (restaurant.getYear() == null) {
+                if (restaurant.getYy() == null) {
                     ps.setString(17, null);
                 } else {
-                    ps.setInt(17, restaurant.getYear());
+                    ps.setInt(17, restaurant.getYy());
                 }
 
                 if (restaurant.getMultiUseBizestblYn() == null) {
