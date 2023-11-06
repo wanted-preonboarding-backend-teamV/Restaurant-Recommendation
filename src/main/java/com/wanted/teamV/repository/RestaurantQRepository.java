@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RestaurantQRepository {
     List<Restaurant> getRestaurants(int page, String restaurantName, RestaurantType restaurantType);
+
+    List<Restaurant> findRecommendRestaurants(Double lat, Double lon);
 }
