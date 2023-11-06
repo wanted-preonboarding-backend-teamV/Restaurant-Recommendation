@@ -1,0 +1,149 @@
+{
+  "Genrestrtlunch": [
+    {
+      "head": [
+        {
+          "list_total_count": 5
+        },
+        {
+          "RESULT": {
+            "CODE": "INFO-000",
+            "MESSAGE": "정상 처리되었습니다."
+          }
+        },
+        {
+          "api_version": "1.0"
+        }
+      ]
+    },
+    {
+      "row": [
+        {
+          "SIGUN_NM": "화성시 ",
+          "SIGUN_CD": null,
+          "BIZPLC_NM": "마니또김밥",
+          "LICENSG_DE": "20150205",
+          "BSN_STATE_NM": "영업",
+          "CLSBIZ_DE": null,
+          "LOCPLC_AR": null,
+          "GRAD_FACLT_DIV_NM": null,
+          "MALE_ENFLPSN_CNT": null,
+          "YY": null,
+          "MULTI_USE_BIZESTBL_YN": null,
+          "GRAD_DIV_NM": null,
+          "TOT_FACLT_SCALE": null,
+          "FEMALE_ENFLPSN_CNT": null,
+          "BSNSITE_CIRCUMFR_DIV_NM": null,
+          "SANITTN_INDUTYPE_NM": null,
+          "SANITTN_BIZCOND_NM": "김밥(도시락)",
+          "TOT_EMPLY_CNT": null,
+          "REFINE_LOTNO_ADDR": "경기도 화성시 반월동 869 현대프라자 112호",
+          "REFINE_ROADNM_ADDR": "경기도 화성시 영통로 59, 1층 112호 (반월동, 현대프라자)",
+          "REFINE_ZIP_CD": "18378",
+          "REFINE_WGS84_LOGT": "127.0619018628",
+          "REFINE_WGS84_LAT": "37.2351254448"
+        },
+        {
+          "SIGUN_NM": "화성시 ",
+          "SIGUN_CD": null,
+          "BIZPLC_NM": "김밥천국",
+          "LICENSG_DE": "1991-06-18",
+          "BSN_STATE_NM": "영업",
+          "CLSBIZ_DE": null,
+          "LOCPLC_AR": null,
+          "GRAD_FACLT_DIV_NM": null,
+          "MALE_ENFLPSN_CNT": 0,
+          "YY": null,
+          "MULTI_USE_BIZESTBL_YN": null,
+          "GRAD_DIV_NM": null,
+          "TOT_FACLT_SCALE": null,
+          "FEMALE_ENFLPSN_CNT": 0,
+          "BSNSITE_CIRCUMFR_DIV_NM": null,
+          "SANITTN_INDUTYPE_NM": null,
+          "SANITTN_BIZCOND_NM": "김밥(도시락)",
+          "TOT_EMPLY_CNT": null,
+          "REFINE_LOTNO_ADDR": "경기도 화성시 봉담읍 와우리 75-3",
+          "REFINE_ROADNM_ADDR": "경기도 화성시 봉담읍 와우안길 48",
+          "REFINE_ZIP_CD": "18321",
+          "REFINE_WGS84_LOGT": "126.9764329175",
+          "REFINE_WGS84_LAT": "37.2160203201"
+        },
+        {
+          "SIGUN_NM": "화성시 ",
+          "SIGUN_CD": null,
+          "BIZPLC_NM": "고봉민김밥인병점주공1단지점",
+          "LICENSG_DE": "2014-12-04",
+          "BSN_STATE_NM": "영업",
+          "CLSBIZ_DE": null,
+          "LOCPLC_AR": null,
+          "GRAD_FACLT_DIV_NM": null,
+          "MALE_ENFLPSN_CNT": null,
+          "YY": null,
+          "MULTI_USE_BIZESTBL_YN": null,
+          "GRAD_DIV_NM": null,
+          "TOT_FACLT_SCALE": null,
+          "FEMALE_ENFLPSN_CNT": null,
+          "BSNSITE_CIRCUMFR_DIV_NM": "기타",
+          "SANITTN_INDUTYPE_NM": null,
+          "SANITTN_BIZCOND_NM": "김밥(도시락)",
+          "TOT_EMPLY_CNT": null,
+          "REFINE_LOTNO_ADDR": "경기도 화성시 병점동 432 외 3필지 107호",
+          "REFINE_ROADNM_ADDR": "경기도 화성시 병점2로 22 (병점동, 외 3필지 107호)",
+          "REFINE_ZIP_CD": "18413",
+          "REFINE_WGS84_LOGT": "127.0394432879",
+          "REFINE_WGS84_LAT": null
+        },
+        {
+          "SIGUN_NM": "이천시 ",
+          "SIGUN_CD": null,
+          "BIZPLC_NM": "토마토도시락 이천신하점",
+          "LICENSG_DE": "20150521",
+          "BSN_STATE_NM": "폐업",
+          "CLSBIZ_DE": null,
+          "LOCPLC_AR": null,
+          "GRAD_FACLT_DIV_NM": null,
+          "MALE_ENFLPSN_CNT": null,
+          "YY": null,
+          "MULTI_USE_BIZESTBL_YN": null,
+          "GRAD_DIV_NM": null,
+          "TOT_FACLT_SCALE": null,
+          "FEMALE_ENFLPSN_CNT": null,
+          "BSNSITE_CIRCUMFR_DIV_NM": "기타",
+          "SANITTN_INDUTYPE_NM": null,
+          "SANITTN_BIZCOND_NM": "김밥(도시락)",
+          "TOT_EMPLY_CNT": null,
+          "REFINE_LOTNO_ADDR": "경기도 이천시 부발읍 신하리 371-6번지 (2층)",
+          "REFINE_ROADNM_ADDR": "경기도 이천시 부발읍 대산로 480, 2층",
+          "REFINE_ZIP_CD": "17327",
+          "REFINE_WGS84_LOGT": "127.4791704671",
+          "REFINE_WGS84_LAT": "37.2601276643"
+        },
+        {
+          "SIGUN_NM": "화성시 ",
+          "SIGUN_CD": null,
+          "BIZPLC_NM": "배두둑김밥",
+          "LICENSG_DE": "201412",
+          "BSN_STATE_NM": "영업",
+          "CLSBIZ_DE": null,
+          "LOCPLC_AR": null,
+          "GRAD_FACLT_DIV_NM": null,
+          "MALE_ENFLPSN_CNT": null,
+          "YY": null,
+          "MULTI_USE_BIZESTBL_YN": null,
+          "GRAD_DIV_NM": null,
+          "TOT_FACLT_SCALE": null,
+          "FEMALE_ENFLPSN_CNT": null,
+          "BSNSITE_CIRCUMFR_DIV_NM": null,
+          "SANITTN_INDUTYPE_NM": null,
+          "SANITTN_BIZCOND_NM": "김밥(도시락)",
+          "TOT_EMPLY_CNT": null,
+          "REFINE_LOTNO_ADDR": "경기도 화성시 반송동 86-4 위너스타 109호",
+          "REFINE_ROADNM_ADDR": "경기도 화성시 동탄원천로 163 (반송동, 위너스타 109호)",
+          "REFINE_ZIP_CD": "18453",
+          "REFINE_WGS84_LOGT": "127.0736926124",
+          "REFINE_WGS84_LAT": "37.2073602091"
+        }
+      ]
+    }
+  ]
+}
