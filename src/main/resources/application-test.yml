@@ -33,7 +33,7 @@ security:
 
 openapi:
   base-url: https://openapi.gg.go.kr
-  service-key: ${SERVICE_KEY}
+  service-key: 6c8cc202ffe24b6abe02d453cec1288c
 
 schedules:
   cron:

@@ -35,6 +35,7 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
             case LUNCH_BOX -> restaurant.sanittnIndutypeNm.eq(LUNCH_BOX.getType());
             case CHINESE -> restaurant.sanittnIndutypeNm.eq(CHINESE.getType());
             case JAPANESE -> restaurant.sanittnIndutypeNm.eq(JAPANESE.getType());
+            case EMPTY -> null;
         };
     }
 }
