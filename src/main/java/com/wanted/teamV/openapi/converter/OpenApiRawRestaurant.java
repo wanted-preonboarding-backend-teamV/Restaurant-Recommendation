@@ -51,8 +51,8 @@ public class OpenApiRawRestaurant {
     String refineLotnoAddr;
     @JsonProperty("REFINE_ZIP_CD")
     private String refineZipCd;
-    @JsonProperty("REFINE_WGS84_LAT")
-    private String refindWgs84Logt;
     @JsonProperty("REFINE_WGS84_LOGT")
+    private String refindWgs84Logt;
+    @JsonProperty("REFINE_WGS84_LAT")
     private String refineWgs84Lat;
 }
