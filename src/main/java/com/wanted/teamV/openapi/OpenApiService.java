@@ -119,7 +119,7 @@ public class OpenApiService {
                         .locplcAr(it.getLocplcAr())
                         .gradFacltDivNm(it.getGradFacltDivNm())
                         .maleEnflpsnCnt(it.getMaleEnflpsnCnt())
-                        .year(it.getYy())
+                        .yy(it.getYy())
                         .multiUseBizestblYn(multiUseBizestblYn)
                         .gradDivNm(it.getGradDivNm())
                         .totFacltScale(it.getTotFacltScale())

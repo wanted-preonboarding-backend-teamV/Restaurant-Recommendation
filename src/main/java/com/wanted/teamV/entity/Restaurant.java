@@ -57,7 +57,7 @@ public class Restaurant {
     Double locplcAr;
     String gradFacltDivNm;
     Integer maleEnflpsnCnt;
-    Integer year;
+    Integer yy;
     Boolean multiUseBizestblYn;
     String gradDivNm;
     Double totFacltScale;
@@ -70,7 +70,7 @@ public class Restaurant {
     public Restaurant(String name, String sigun, String type, String roadnameAddress, String lotAddress, String zipCode,
                       Double lat, Double lon, Double averageRating, List<Rating> ratingList, String bsnStateNm, String sigunCd,
                       LocalDateTime licenseDe, LocalDateTime clsbizDe, Double locplcAr, String gradFacltDivNm,
-                      Integer maleEnflpsnCnt, Integer year, Boolean multiUseBizestblYn, String gradDivNm, Double totFacltScale,
+                      Integer maleEnflpsnCnt, Integer yy, Boolean multiUseBizestblYn, String gradDivNm, Double totFacltScale,
                       Integer femaleEnflpsnCnt, String circumfrDivNm, String sanittnIndutypeNm, Integer totEmplyCnt) {
         this.name = name;
         this.sigun = sigun;
@@ -89,7 +89,7 @@ public class Restaurant {
         this.locplcAr = locplcAr;
         this.gradFacltDivNm = gradFacltDivNm;
         this.maleEnflpsnCnt = maleEnflpsnCnt;
-        this.year = year;
+        this.yy = yy;
         this.multiUseBizestblYn = multiUseBizestblYn;
         this.gradDivNm = gradDivNm;
         this.totFacltScale = totFacltScale;
@@ -115,7 +115,7 @@ public class Restaurant {
         this.locplcAr = restaurant.locplcAr == null? this.locplcAr : restaurant.locplcAr;
         this.gradFacltDivNm = restaurant.gradFacltDivNm == null? this.gradFacltDivNm : restaurant.gradFacltDivNm;
         this.maleEnflpsnCnt = restaurant.maleEnflpsnCnt == null? this.maleEnflpsnCnt : restaurant.maleEnflpsnCnt;
-        this.year = restaurant.year == null? this.year : restaurant.year;
+        this.yy = restaurant.yy == null? this.yy : restaurant.yy;
         this.multiUseBizestblYn = restaurant.multiUseBizestblYn == null? this.multiUseBizestblYn : restaurant.multiUseBizestblYn;
         this.gradDivNm = restaurant.gradDivNm == null? this.gradDivNm : restaurant.gradDivNm;
         this.totFacltScale = restaurant.totFacltScale == null? this.totFacltScale : restaurant.totFacltScale;
