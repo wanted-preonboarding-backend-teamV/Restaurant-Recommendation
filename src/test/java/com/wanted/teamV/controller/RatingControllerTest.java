@@ -46,6 +46,7 @@ class RatingControllerTest {
     private RestaurantRepository restaurantRepository;
 
     private String token;
+    private long mockRestaurantId;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -86,6 +87,7 @@ class RatingControllerTest {
                 .build();
 
         restaurantRepository.save(mockRestaurant);
+        mockRestaurantId = mockRestaurant.getId();
     }
 
     @Test
@@ -120,7 +122,7 @@ class RatingControllerTest {
         @DisplayName("음식점이 존재하지 않을 때")
         void createRating_RestaurantNotFound() throws Exception {
             //given
-            long restaurantId = 100L;
+            long restaurantId = mockRestaurantId + 1;
             int score = 5;
             String content = "맛있어요!";
 
