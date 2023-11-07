@@ -27,6 +27,7 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
     private final List<String> RESTAURANT_TYPE = new ArrayList<>(
             Arrays.stream(RestaurantType.values())
                     .map(RestaurantType::getType)
+                    .filter(type -> !type.equals("없음"))
                     .collect(Collectors.toList())
     );
 
