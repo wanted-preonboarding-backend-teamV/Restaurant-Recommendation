@@ -37,7 +37,7 @@ public class RecommendationScheduler {
     @Value("${discord.webhook.footer_icon}")
     private String FOOTER_ICON;
 
-    @Scheduled(cron = "0 30 11 * * ?")
+    @Scheduled(cron = "${schedules.cron.lunch-recommendation}")
     @Transactional(readOnly = true)
     public void sendRecommendations() {
         // 점심 추천에 동의한 모든 사용자 가져오기

@@ -46,4 +46,12 @@ public class Member {
         member.recommend = false;
         return member;
     }
+
+    public Member(String account, String password, Double lat, Double lon, Boolean recommend) {
+        this.account = account;
+        this.password = password;
+        this.lat = lat;
+        this.lon = lon;
+        this.recommend = recommend;
+    }
 }
