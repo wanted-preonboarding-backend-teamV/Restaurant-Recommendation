@@ -34,15 +34,14 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
 
     @Override
     public List<Restaurant> getRestaurants(double lat, double lon, double range, RestaurantOrdering ordering, int page, String restaurantName, RestaurantType restaurantType) {
+        NumberExpression<Double> distance = haversineDistance(lat, lon, restaurant.lat, restaurant.lon);
+
         return queryFactory
                 .selectFrom(restaurant)
-                .where(haversineDistance(lat, lon, restaurant.lat, restaurant.lon).loe(range)
-                        .and(restaurant.name.containsIgnoreCase(restaurantName)
-                                .or(filterRestaurantType(restaurantType)))
-                )
+                .where(distance.loe(range).and(restaurant.name.containsIgnoreCase(restaurantName).or(filterRestaurantType(restaurantType))))
                 .offset(page)
                 .limit(PAGE_SIZE)
-                .orderBy(orderRestaurants(lat, lon, ordering))
+                .orderBy(orderRestaurants(ordering, distance))
                 .fetch();
     }
 
@@ -56,12 +55,12 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
         };
     }
 
-    private OrderSpecifier<?> orderRestaurants(double lat, double lon, RestaurantOrdering order) {
+    private OrderSpecifier<?> orderRestaurants(RestaurantOrdering order, NumberExpression<Double> distance) {
         if(order.isOrderByRating()) {
             return restaurant.averageRating.desc();
         }
 
-        return haversineDistance(lat, lon, restaurant.lat, restaurant.lon).asc();
+        return distance.asc();
     }
 
     // 사용자로부터 거리가 500미터 이내인 음식점을 평균 평점이 높은 순서대로 최대 5개 까지 반환
