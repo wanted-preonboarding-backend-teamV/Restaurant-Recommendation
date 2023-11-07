@@ -33,8 +33,17 @@ security:
 
 openapi:
   base-url: https://openapi.gg.go.kr
-  service-key: ${SERVICE_KEY}
+  service-key: 6c8cc202ffe24b6abe02d453cec1288c
 
 schedules:
   cron:
     restaurant-collection: 0 0 2 * * *
+
+discord:
+  bot: teamV
+  webhook:
+    url: ${WEBHOOK_URL}
+    avatar_url: ${AVATAR_URL}
+    author_url: ${AUTHOR_URL}
+    author_icon: ${AUTHOR_ICON}
+    footer_icon: ${FOOTER_ICON}

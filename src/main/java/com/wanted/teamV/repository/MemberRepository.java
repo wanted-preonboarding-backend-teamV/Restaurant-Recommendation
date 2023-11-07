@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -21,4 +22,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("UPDATE Member m SET m.lat = :lat, m.lon = :lon, m.recommend = :recommend WHERE m.id = :memberId")
     void updateMemberFields(Long memberId, Double lat, Double lon, Boolean recommend);
+
+    List<Member> findAllByRecommendTrue();
+
 }

@@ -20,55 +20,55 @@ public class Restaurant {
     Long id;
 
     @Column(nullable = false)
-    String name;
+    private String name;
 
     @Column(nullable = false)
-    String sigun;
+    private String sigun;
 
     @Column(nullable = false)
-    String type;
+    private String type;
 
     @Column(nullable = false)
-    String roadnameAddress;
+    private String roadnameAddress;
 
     @Column(nullable = false)
-    String lotAddress;
+    private String lotAddress;
 
     @Column(nullable = false)
-    String zipCode;
+    private String zipCode;
 
     @Column(nullable = false)
-    Double lat;
+    private Double lat;
 
     @Column(nullable = false)
-    Double lon;
+    private Double lon;
 
     @Column(nullable = false)
-    Double averageRating;
+    private Double averageRating;
 
     @OneToMany(mappedBy = "restaurant")
-    List<Rating> ratingList = new ArrayList<>();
+    private final List<Rating> ratingList = new ArrayList<>();
 
     //raw 데이터 저장을 위한 필드 -> ERD 확인
-    String bsnStateNm;
-    String sigunCd;
-    LocalDateTime licenseDe;
-    LocalDateTime clsbizDe;
-    Double locplcAr;
-    String gradFacltDivNm;
-    Integer maleEnflpsnCnt;
-    Integer yy;
-    Boolean multiUseBizestblYn;
-    String gradDivNm;
-    Double totFacltScale;
-    Integer femaleEnflpsnCnt;
-    String circumfrDivNm;
-    String sanittnIndutypeNm;
-    Integer totEmplyCnt;
+    private String bsnStateNm;
+    private String sigunCd;
+    private LocalDateTime licenseDe;
+    private LocalDateTime clsbizDe;
+    private Double locplcAr;
+    private String gradFacltDivNm;
+    private Integer maleEnflpsnCnt;
+    private Integer yy;
+    private Boolean multiUseBizestblYn;
+    private String gradDivNm;
+    private Double totFacltScale;
+    private Integer femaleEnflpsnCnt;
+    private String circumfrDivNm;
+    private String sanittnIndutypeNm;
+    private Integer totEmplyCnt;
 
     @Builder
     public Restaurant(String name, String sigun, String type, String roadnameAddress, String lotAddress, String zipCode,
-                      Double lat, Double lon, Double averageRating, List<Rating> ratingList, String bsnStateNm, String sigunCd,
+                      Double lat, Double lon, Double averageRating, String bsnStateNm, String sigunCd,
                       LocalDateTime licenseDe, LocalDateTime clsbizDe, Double locplcAr, String gradFacltDivNm,
                       Integer maleEnflpsnCnt, Integer yy, Boolean multiUseBizestblYn, String gradDivNm, Double totFacltScale,
                       Integer femaleEnflpsnCnt, String circumfrDivNm, String sanittnIndutypeNm, Integer totEmplyCnt) {
@@ -81,7 +81,6 @@ public class Restaurant {
         this.lat = lat;
         this.lon = lon;
         this.averageRating = averageRating;
-        this.ratingList = ratingList;
         this.bsnStateNm = bsnStateNm;
         this.sigunCd = sigunCd;
         this.licenseDe = licenseDe;
@@ -99,6 +98,10 @@ public class Restaurant {
         this.totEmplyCnt = totEmplyCnt;
     }
 
+    public void addRating(Rating rating) {
+        ratingList.add(rating);
+    }
+
     public void update(Restaurant restaurant) {
         this.sigun = restaurant.sigun == null? this.sigun : restaurant.sigun;
         this.type = restaurant.type == null? this.type : restaurant.type;
@@ -107,7 +110,6 @@ public class Restaurant {
         this.lat = restaurant.lat == null? this.lat : restaurant.lat;
         this.lon = restaurant.lon == null? this.lon : restaurant.lon;
         this.averageRating = restaurant.averageRating == null? this.averageRating : restaurant.averageRating;
-        this.ratingList = restaurant.ratingList == null? this.ratingList : restaurant.ratingList;
         this.bsnStateNm = restaurant.bsnStateNm == null? this.bsnStateNm : restaurant.bsnStateNm;
         this.sigunCd = restaurant.sigunCd == null? this.sigunCd : restaurant.sigunCd;
         this.licenseDe = restaurant.licenseDe == null? this.licenseDe : restaurant.licenseDe;
