@@ -29,6 +29,7 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
     private final List<String> RESTAURANT_TYPE = new ArrayList<>(
             Arrays.stream(RestaurantType.values())
                     .map(RestaurantType::getType)
+                    .filter(type -> !type.equals("없음"))
                     .collect(Collectors.toList())
     );
 
@@ -63,10 +64,10 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
         return distance.asc();
     }
 
-    // 사용자로부터 거리가 500미터 이내인 음식점을 평균 평점이 높은 순서대로 최대 5개 까지 반환
+    // 사용자로부터 거리가 1km 이내인 음식점을 평균 평점이 높은 순서대로 최대 5개 까지 반환
     @Override
     public List<Restaurant> findRecommendRestaurants(Double memberLat, Double memberLon) {
-        double distanceInKm = 0.5; // 500미터 근처
+        double distanceInKm = 1; // 1km 근처
 
         List<Restaurant> recommendedRestaurants = new ArrayList<>();
 
@@ -88,35 +89,9 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
 
     // Harversine 공식이용하여 사용자와 음식점 거리 계산
     private NumberExpression<Double> haversineDistance(double lat1, double lon1, NumberPath<Double> lat2, NumberPath<Double> lon2) {
-        // latitude 를 radians 로 계산
-        NumberExpression<Double> radiansLatitude =
-                Expressions.numberTemplate(Double.class, "radians({0})", lat1);
-
-        // 계산된 latitude -> 코사인 계산
-        NumberExpression<Double> cosLatitude =
-                Expressions.numberTemplate(Double.class, "cos({0})", radiansLatitude);
-        NumberExpression<Double> cosRestaurantLatitude =
-                Expressions.numberTemplate(Double.class, "cos(radians({0}))", lat2);
-
-        // 계산된 latitude -> 사인 계산
-        NumberExpression<Double> sinLatitude =
-                Expressions.numberTemplate(Double.class, "sin({0})", radiansLatitude);
-        NumberExpression<Double> sinRestaurantLatitude =
-                Expressions.numberTemplate(Double.class, "sin(radians({0}))", lat2);
-
-        // 사이 거리 계산
-        NumberExpression<Double> cosLongitude =
-                Expressions.numberTemplate(Double.class, "cos(radians({0}) - radians({1}))", lon2, lon1);
-
-        NumberExpression<Double> acosExpression =
-                Expressions.numberTemplate(Double.class, "acos({0})",
-                        cosLatitude.multiply(cosRestaurantLatitude).multiply(cosLongitude).add(sinLatitude.multiply(sinRestaurantLatitude)));
-
-        // 최종 계산
-        NumberExpression<Double> distanceExpression =
-                Expressions.numberTemplate(Double.class, "6371 * {0}", acosExpression);
-
-        return distanceExpression;
+        return Expressions.numberTemplate(Double.class,
+                "6371 * acos(cos(radians({0})) * cos(radians({2})) * cos(radians({3}) - radians({1})) + sin(radians({0})) * sin(radians({2})))",
+                lat1, lon1, lat2, lon2);
     }
 
 }

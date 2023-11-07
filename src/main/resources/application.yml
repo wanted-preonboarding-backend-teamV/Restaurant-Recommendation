@@ -32,6 +32,7 @@ openapi:
 schedules:
   cron:
     restaurant-collection: 0 0 2 * * *
+    lunch-recommendation: 0 30 11 * * *
 
 discord:
   bot: teamV
