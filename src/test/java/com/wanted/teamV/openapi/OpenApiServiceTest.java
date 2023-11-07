@@ -44,22 +44,22 @@ class OpenApiServiceTest {
         Assertions.assertEquals(5, rawRestaurants.size());
     }
 
-//    @Test
-//    @DisplayName("OpenAPI 요청에 오류가 발생하여 음식점들의 데이터를 불러오는 데 실패한다.")
-//    public void get_raw_data_failure() throws IOException {
-//        // given
-//        String path = "src/test/resources/json/failure.json";
-//        String rawJson = new String(Files.readAllBytes(Paths.get(path)));
-//
-//        when(openApi.getRestaurantsInfo(any(), eq("json"), anyInt(), anyInt(), any()))
-//                .thenReturn(rawJson);
-//
-//        // when
-//        List<OpenApiRawRestaurant> rawRestaurants = openApiService.getRawDataFromOpenapi(OpenApiRestaurantType.LUNCH);
-//
-//        // then
-//        Assertions.assertEquals(0, rawRestaurants.size());
-//    }
+    @Test
+    @DisplayName("OpenAPI 요청에 오류가 발생하여 음식점들의 데이터를 불러오는 데 실패한다.")
+    public void get_raw_data_failure() throws IOException {
+        // given
+        String path = "src/test/resources/json/failure.json";
+        String rawJson = new String(Files.readAllBytes(Paths.get(path)));
+
+        when(openApi.getRestaurantsInfo(any(), eq("json"), anyInt(), anyInt(), any()))
+                .thenReturn(rawJson);
+
+        // when
+        List<OpenApiRawRestaurant> rawRestaurants = openApiService.getRawDataFromOpenapi(OpenApiRestaurantType.LUNCH);
+
+        // then
+        Assertions.assertEquals(0, rawRestaurants.size());
+    }
 
     @Test
     @DisplayName("Raw 데이터를 전처리한다.")
