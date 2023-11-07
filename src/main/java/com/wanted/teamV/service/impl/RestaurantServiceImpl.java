@@ -1,10 +1,7 @@
 package com.wanted.teamV.service.impl;
 
 import com.wanted.teamV.dto.Coordinate;
-import com.wanted.teamV.dto.res.RatingResDto;
-import com.wanted.teamV.dto.res.RestaurantDetailResDto;
-import com.wanted.teamV.dto.res.RestaurantDistrictResDto;
-import com.wanted.teamV.dto.res.RestaurantResDto;
+import com.wanted.teamV.dto.res.*;
 import com.wanted.teamV.entity.Rating;
 import com.wanted.teamV.entity.Restaurant;
 import com.wanted.teamV.repository.RestaurantQRepository;
@@ -13,9 +10,11 @@ import com.wanted.teamV.service.RestaurantService;
 import com.wanted.teamV.type.RestaurantOrdering;
 import com.wanted.teamV.type.RestaurantType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -28,10 +27,13 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
+    @Cacheable(value = "districts", key = "'sggList'", cacheManager = "cacheManager")
     public List<RestaurantDistrictResDto> getDistricts() {
-        return fileParser.parse().stream()
+        List<RestaurantDistrictResDto> lists = fileParser.parse().stream()
                 .map(RestaurantDistrictResDto::toDto)
-                .toList();
+                .collect(Collectors.toList());
+
+        return lists;
     }
 
     @Override
@@ -42,18 +44,18 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         //요청한 좌표 안에 있는 맛집 필터링
         restaurantQRepository.getRestaurants(page, restaurantName, type).forEach(restaurant -> {
-                    Coordinate restaurantCoordinate = new Coordinate(restaurant.getLat(), restaurant.getLon());
-                    double distance = DistanceCalculator.calculate(coordinate, restaurantCoordinate); //km
+            Coordinate restaurantCoordinate = new Coordinate(restaurant.getLat(), restaurant.getLon());
+            double distance = DistanceCalculator.calculate(coordinate, restaurantCoordinate); //km
 
-                    if(distance <= range) {
-                        restaurants.put(restaurant, distance);
-                    }
-                });
+            if (distance <= range) {
+                restaurants.put(restaurant, distance);
+            }
+        });
 
         List<Restaurant> keySet = new ArrayList<>(restaurants.keySet());
         RestaurantOrdering ordering = RestaurantOrdering.toEnum(order);
 
-        if(ordering.isOrderByDistance()) {
+        if (ordering.isOrderByDistance()) {
             keySet.sort(Comparator.comparing(restaurants::get));
 
             return keySet.stream()
