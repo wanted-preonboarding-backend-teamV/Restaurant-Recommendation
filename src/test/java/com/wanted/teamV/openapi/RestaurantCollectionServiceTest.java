@@ -33,6 +33,7 @@ class RestaurantCollectionServiceTest {
     @BeforeEach
     public void setUp() {
         collectionService = new RestaurantCollectionService(apiService, restaurantRepository, ratingRepository);
+        restaurantRepository.deleteAll();
     }
 
     @Test
