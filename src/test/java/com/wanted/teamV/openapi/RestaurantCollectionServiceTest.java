@@ -33,7 +33,6 @@ class RestaurantCollectionServiceTest {
     @BeforeEach
     public void setUp() {
         collectionService = new RestaurantCollectionService(apiService, restaurantRepository, ratingRepository);
-        restaurantRepository.deleteAll();
     }
 
     @Test
@@ -41,7 +40,7 @@ class RestaurantCollectionServiceTest {
     public void closed_restaurant_is_not_saved() {
         // given
         Restaurant restaurant1 = Restaurant.builder()
-                .name("마니또김밥")
+                .name("teamv김밥")
                 .sigun("화성시 ")
                 .licenseDe(LocalDateTime.of(2015, 2, 5, 0, 0, 0))
                 .bsnStateNm("영업")
@@ -54,7 +53,7 @@ class RestaurantCollectionServiceTest {
                 .averageRating(0.0)
                 .build();
         Restaurant restaurant2 = Restaurant.builder()
-                .name("김밥천국")
+                .name("teamv도시락")
                 .sigun("화성시 ")
                 .licenseDe(LocalDateTime.of(1991, 6, 18, 0, 0, 0))
                 .bsnStateNm("폐업")
@@ -73,8 +72,10 @@ class RestaurantCollectionServiceTest {
         collectionService.collectAllRestaurants();
 
         // then
-        List<Restaurant> all = restaurantRepository.findAll();
-        Assertions.assertEquals(1, all.size());
+        List<Restaurant> teamvKB = restaurantRepository.findAllByNameAndRoadnameAddress("teamv김밥", "경기도 화성시 영통로 59, 1층 112호 (반월동, 현대프라자)");
+        Assertions.assertFalse(teamvKB.isEmpty());
+        List<Restaurant> teamvDSR = restaurantRepository.findAllByNameAndRoadnameAddress("teamv도시락", "경기도 화성시 봉담읍 와우안길 48");
+        Assertions.assertTrue(teamvDSR.isEmpty());
     }
 
     @Test
@@ -82,7 +83,7 @@ class RestaurantCollectionServiceTest {
     public void update_restaurant_info() {
         // given
         restaurantRepository.save(Restaurant.builder()
-                .name("마니또김밥")
+                .name("teamv김밥")
                 .sigun("화성시 ")
                 .licenseDe(LocalDateTime.of(2015, 2, 5, 0, 0, 0))
                 .bsnStateNm("영업")
@@ -96,7 +97,7 @@ class RestaurantCollectionServiceTest {
                 .build());
 
         Restaurant updateRestaurant = Restaurant.builder()
-                .name("마니또김밥")
+                .name("teamv김밥")
                 .sigun("화성시")
                 .licenseDe(LocalDateTime.of(2014, 2, 5, 0, 0, 0))
                 .bsnStateNm("영업")
@@ -116,9 +117,9 @@ class RestaurantCollectionServiceTest {
         collectionService.collectAllRestaurants();
 
         // then
-        List<Restaurant> all = restaurantRepository.findAll();
-        Assertions.assertEquals(1, all.size());
-        Restaurant updated = all.get(0);
+        List<Restaurant> teamvKB = restaurantRepository.findAllByNameAndRoadnameAddress("teamv김밥", "경기도 화성시 영통로 59, 1층 112호 (반월동, 현대프라자)");
+        Assertions.assertEquals(1, teamvKB.size());
+        Restaurant updated = teamvKB.get(0);
         Assertions.assertEquals("화성시", updated.getSigun());
         Assertions.assertEquals(LocalDateTime.of(2014, 2, 5, 0, 0, 0), updated.getLicenseDe());
         Assertions.assertEquals(20, updated.getTotEmplyCnt());
@@ -129,7 +130,7 @@ class RestaurantCollectionServiceTest {
     public void delete_closed_restaurant() {
         // given
         restaurantRepository.save(Restaurant.builder()
-                .name("마니또김밥")
+                .name("teamv김밥")
                 .sigun("화성시 ")
                 .licenseDe(LocalDateTime.of(2015, 2, 5, 0, 0, 0))
                 .bsnStateNm("영업")
@@ -143,7 +144,7 @@ class RestaurantCollectionServiceTest {
                 .build());
 
         Restaurant updateRestaurant = Restaurant.builder()
-                .name("마니또김밥")
+                .name("teamv김밥")
                 .sigun("화성시")
                 .licenseDe(LocalDateTime.of(2014, 2, 5, 0, 0, 0))
                 .bsnStateNm("폐업")
@@ -163,7 +164,7 @@ class RestaurantCollectionServiceTest {
         collectionService.collectAllRestaurants();
 
         // then
-        List<Restaurant> all = restaurantRepository.findAll();
-        Assertions.assertEquals(0, all.size());
+        List<Restaurant> teamvKB = restaurantRepository.findAllByNameAndRoadnameAddress("teamv김밥", "경기도 화성시 영통로 59, 1층 112호 (반월동, 현대프라자)");
+        Assertions.assertEquals(0, teamvKB.size());
     }
 }
