@@ -9,7 +9,9 @@ public enum RestaurantType {
     FAST_FOOD("패스트푸드"),
     CHINESE("중국식"),
     LUNCH_BOX("김밥(도시락)"),
-    JAPANESE("일식");
+    JAPANESE("일식"),
+    EMPTY("없음")
+    ;
 
     private final String type;
 
@@ -21,7 +23,7 @@ public enum RestaurantType {
         return Arrays.stream(values())
                 .filter(type -> type.isSameType(target))
                 .findFirst()
-                .orElse(null);
+                .orElse(EMPTY);
     }
 
     private boolean isSameType(String type) {

@@ -1,5 +1,6 @@
 package com.wanted.teamV.openapi.converter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OpenApiRawRestaurant {
     @JsonProperty("SIGUN_NM")
     private String sigunNm;
@@ -51,8 +53,8 @@ public class OpenApiRawRestaurant {
     String refineLotnoAddr;
     @JsonProperty("REFINE_ZIP_CD")
     private String refineZipCd;
-    @JsonProperty("REFINE_WGS84_LAT")
-    private String refindWgs84Logt;
     @JsonProperty("REFINE_WGS84_LOGT")
+    private String refindWgs84Logt;
+    @JsonProperty("REFINE_WGS84_LAT")
     private String refineWgs84Lat;
 }
