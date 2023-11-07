@@ -10,7 +10,6 @@ import com.wanted.teamV.exception.ErrorCode;
 import com.wanted.teamV.repository.MemberRepository;
 import com.wanted.teamV.service.impl.AuthTokenCreator;
 import com.wanted.teamV.service.impl.MemberServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,21 +17,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class MemberServiceImplTest {
@@ -85,7 +79,7 @@ class MemberServiceImplTest {
     @Transactional
     public void login() throws Exception {
         //given
-        Member member = Member.testMemberEntity();
+        Member member = new Member("test1234", "hashedPassword", 36.123456, 127.654321, true);
 
         when(memberRepository.getByAccount("test1234")).thenReturn(member);
         when(passwordEncoder.matches("test1234!@#$", "hashedPassword")).thenReturn(true);
@@ -105,7 +99,7 @@ class MemberServiceImplTest {
     @Transactional
     public void login_invalid_password() throws Exception {
         //given
-        Member member = Member.testMemberEntity();
+        Member member = new Member("test1234", "hashedPassword", 36.123456, 127.654321, true);
 
         when(memberRepository.getByAccount("test1234")).thenReturn(member);
         when(passwordEncoder.matches("wrongPassword", "hashedPassword")).thenReturn(false);
@@ -122,7 +116,7 @@ class MemberServiceImplTest {
     @DisplayName("조회 - 성공")
     public void getMember() throws Exception {
         //given
-        Member member = Member.testMemberEntity();
+        Member member = new Member("test1234", "hashedPassword", 36.123456, 127.654321, true);
 
         when(memberRepository.findById(1L)).thenReturn(Optional.of(member));
 
