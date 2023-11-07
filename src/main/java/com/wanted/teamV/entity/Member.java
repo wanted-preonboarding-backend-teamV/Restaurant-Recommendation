@@ -36,6 +36,17 @@ public class Member {
         this.lon = lon;
     }
 
+    public static Member testMemberEntity() {
+        Member member = new Member();
+        member.id = 1L;
+        member.account = "test1234";
+        member.password = "hashedPassword";
+        member.lat = null;
+        member.lon = null;
+        member.recommend = false;
+        return member;
+    }
+
     public Member(String account, String password, Double lat, Double lon, Boolean recommend) {
         this.account = account;
         this.password = password;
