@@ -14,6 +14,10 @@ spring:
         globally_quoted_identifiers: true
         jdbc:
           time_zone: Asia/Seoul
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
   h2:
     console:
