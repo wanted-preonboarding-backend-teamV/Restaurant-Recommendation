@@ -1,10 +1,7 @@
 package com.wanted.teamV.service.impl;
 
 import com.wanted.teamV.dto.Coordinate;
-import com.wanted.teamV.dto.res.RatingResDto;
-import com.wanted.teamV.dto.res.RestaurantDetailResDto;
-import com.wanted.teamV.dto.res.RestaurantDistrictResDto;
-import com.wanted.teamV.dto.res.RestaurantResDto;
+import com.wanted.teamV.dto.res.*;
 import com.wanted.teamV.entity.Rating;
 import com.wanted.teamV.entity.Restaurant;
 import com.wanted.teamV.repository.RestaurantRepository;
@@ -48,15 +45,15 @@ public class RestaurantServiceImpl implements RestaurantService {
                     Coordinate restaurantCoordinate = new Coordinate(restaurant.getLat(), restaurant.getLon());
                     double distance = DistanceCalculator.calculate(coordinate, restaurantCoordinate); //km
 
-                    if(distance <= range) {
-                        restaurants.put(restaurant, distance);
-                    }
-                });
+            if (distance <= range) {
+                restaurants.put(restaurant, distance);
+            }
+        });
 
         List<Restaurant> keySet = new ArrayList<>(restaurants.keySet());
         RestaurantOrdering ordering = RestaurantOrdering.toEnum(order);
 
-        if(ordering.isOrderByDistance()) {
+        if (ordering.isOrderByDistance()) {
             keySet.sort(Comparator.comparing(restaurants::get));
 
             return keySet.stream()
@@ -71,6 +68,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Cacheable(value = "restaurant", key = "#restaurantId", cacheManager = "cacheManager")
     public RestaurantDetailResDto getRestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
 

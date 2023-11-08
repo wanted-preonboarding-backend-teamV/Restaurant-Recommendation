@@ -1,15 +1,13 @@
 package com.wanted.teamV.service.impl;
 
-import com.wanted.teamV.dto.Coordinate;
-
 public class DistanceCalculator {
 
     //두 좌표 사이의 거리를 계산하는 로직
-    public static double calculate(Coordinate point1, Coordinate point2) {
-        double lat1 = point1.lat();
-        double lon1 = point1.lon();
-        double lat2 = point2.lat();
-        double lon2 = point2.lon();
+    public static double calculate(double point1Lat, double point1Lon, double point2Lat, double point2Lon) {
+        double lat1 = point1Lat;
+        double lon1 = point1Lon;
+        double lat2 = point2Lat;
+        double lon2 = point2Lon;
 
         double R = 6371; // km
         double dLat = Math.toRadians(lat2 - lat1);

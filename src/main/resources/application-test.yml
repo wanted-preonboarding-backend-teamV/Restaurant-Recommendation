@@ -11,9 +11,15 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
+        format_sql: true
+        show_sql: true
         globally_quoted_identifiers: true
         jdbc:
           time_zone: Asia/Seoul
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
   h2:
     console:
