@@ -1,154 +1,281 @@
 ![logo](https://static.wanted.co.kr/images/events/3178/58ac3248.jpg)
 
-# 메일 정리 자동화 웹서비스
-고객의 메세지를 태그, 스팸 처리 등 자동으로 분류해주는 웹 서비스
-
+# 지리 기반 맛집 추천 웹 서비스
+본 서비스는 공공데이터를 활용하여, 지역 음식점 목록을 자동으로 업데이트 하고 이를 활용한다. 사용자 위치에맞게 맛집 및 메뉴를 추천하여 더 나은 다양한 음식 경험을 제공하고, 음식을 좋아하는 사람들 간의 소통과 공유를 촉진하려 합니다.
 <br/>
 
 ## Table of Contents
 - [개요](#개요)
 - [Skils](#skils)
-- [Installation](#Installation)
+- [Teams](#teams)
 - [Running Tests](#running-tests)
 - [API Reference](#api-reference)
 - [프로젝트 진행 및 이슈 관리](#프로젝트-진행-및-이슈-관리)
 - [구현과정(설계 및 의도)](#구현과정(설계-및-의도))
 - [TIL 및 회고](#til-및-회고)
-- [Authors](#authors)
 - [References](#references)
 
 <br/>
 
 
 ## 개요
-이 서비스가 어떠한 배경에서 발견한 문제상황을 해결하기 위해 시작되었는지 및 어떠한 방법으로 해당 문제를 해결하려 하는지 등 ... To use a badge:
-- Via Github
-    1. Press `Ctrl` + `f` on your keyboard, to bring out the search modal.
-    1. Enter the name of the badge you need.
-    1. Copy the appropriate `![Name](link)` element and paste it in your Markdown file (e.g. README.md)
-- You could also visit the live site at [ileriayo.github.io/markdown-badges/](https://ileriayo.github.io/markdown-badges/)
-
+본인의 위치 또는 특정 위치에서 반경 이내에 있는 맛집을 추천해주는 서비스
 <br/>
 
 
 ## Skils
-가상환경: ![Static Badge](https://img.shields.io/badge/Conda-green)<br/>언어 및 프레임워크: ![Static Badge](https://img.shields.io/badge/Python-3.10-blue) ![Static Badge](https://img.shields.io/badge/Django-REST-red)<br/>
-데이터 베이스: ![Static Badge](https://img.shields.io/badge/Postgresql-9.2.4-blue) <br/>
-배포 : ![Static Badge](https://img.shields.io/badge/Docker-039BC6) ![Static Badge](https://img.shields.io/badge/AWS-EC2-orange) ![Static Badge](https://img.shields.io/badge/Github-Actions-black)  <br/> ETC : ![Static Badge](https://img.shields.io/badge/Celery-black) ![Static Badge](https://img.shields.io/badge/Redis-red)
-
+언어 및 프레임워크: ![Static Badge](https://img.shields.io/badge/JAVA-17-blue) ![Static Badge](https://img.shields.io/badge/SpringBoot-3.1.5-green)<br/>
+데이터베이스: ![Static Badge](https://img.shields.io/badge/MySQL--red)<br/>
+테스트 데이터베이스: ![Static Badge](https://img.shields.io/badge/H2--red)
 <br/>
 
+## Teams
 
-## Installation
+| 팀원      | 담당                                              |
+|---------|-------------------------------------------------|
+| 신민석(팀장) | 사용자 회원가입, 로그인, 설정 업데이트, 조회, 시군구 목록, 맛집 상세 조회 캐싱 |
+| 김나윤     | 맛집 평가 생성, 점심 추천 Discord Webhook                 |
+| 남세원     | 시군구 목록 조회, 맛집 목록, 상세 조회                         |
+| 원정연     | 공공 데이터 파이프라인 (수집, 전처리, 저장, 스케쥴링)                |
 
-Install my-project with npm
-
-```bash
-  # Package 설치
-  npm install my-project
-  cd my-project
-  
-  # 초기 설정 : 데이터 및  스케쥴러 실행
-  npm install my-project
-  cd my-project
-```
 
 <br/>
-
 
 ## Running Tests
 
-To run tests, run the following command
-
-```bash
-  npm run test
-```
-
-> Coverage ScreenShot ![Static Badge](https://img.shields.io/badge/Test_Passed-20/20-green)
-![coverage](https://user-images.githubusercontent.com/48683566/56673924-0b84ae00-66b1-11e9-93ac-fb76ff96a5a0.png)
-
+> ![Static Badge](https://img.shields.io/badge/Test_Passed-51/53-green) <br/>
+![test](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/83534757/96e99a9f-e2f4-41e4-a34f-3e8310c700f9)
+> - API 테스트는 성공했으나 Github Actions CI에서 Redis 연결을 하지 못해 Redis 연결된 2개의 테스트만 실패
+> - 추후 Docker 활용해서 CI에도 Redis 구현 예정
+> 
 <br/>
 
 
 ## API Reference
+[API 명세서](https://wonwonjung.notion.site/API-2f04e83f36e349159ccc476d3ea869f3?pvs=4)
 
 <details>
-<summary>Get all items - click</summary>
+<summary>Member</summary>
 
-#### Request
-```javascript
-  GET /api/items
-```
+#### 회원가입
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+POST /members
+
+| 바디       | 타입     | 설명   |
+|:---------|:-------|:-----|
+| account  | string | 계정   |
+| password | string | 비밀번호 |
 
 #### Response
-```http
+
     HTTP/1.1 200
     Content-Type: application/json
 
-    [{
-        "id": 10,
-        "name": "shirt",
-        "color": "red",
-        "price": "$23"
-    },...
-    ]
-```
+#### 로그인
+
+POST /members/login
+
+| 바디     | 타입     | 설명   |
+|:---------|:-------|:-----|
+| account  | string | 계정   |
+| password | string | 비밀번호 |
+
+#### Response
+
+    HTTP/1.1 200
+    Content-Type: application/json
+
+    {
+        "accessToken": "12412fd12fdksr.142fdadafs.rea2r23r23f"
+    }
+
+#### 설정 업데이트
+
+PATCH /members
+
+| 바디      | 타입      | 설명       |
+|:----------|:--------|:---------|
+| lat       | double  | 위도       |
+| lon       | double  | 경도       |
+| recommend | boolean | 점심 추천 여부 |
+
+#### Response
+
+    HTTP/1.1 204
+    Content-Type: application/json
+
+   ``` json
+   {
+	"id": 1,
+	"account": "test1234",
+	"lat": 35.123251,
+	"lon": 127.231049,
+	"recommend": true
+}
+   ```
+
+#### 정보 조회
+
+GET /members
+
+#### Response
+
+    HTTP/1.1 204
+    Content-Type: application/json
+
+   ``` json
+   {
+	"id": 1,
+	"account": "test1234",
+	"lat": 35.123251,
+	"lon": 127.231049,
+	"recommend": true
+}
+   ```
+
 </details>
 <details>
-<summary>Get all items - click</summary>
+<summary>Restaurant</summary>
 
-#### Request
-```javascript
-  GET /api/items
-```
+#### 시군구 목록 조회
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+GET /restaurants/district
 
 #### Response
-```http
-    HTTP/1.1 200
+
+    HTTP/1.1 204
     Content-Type: application/json
 
-    [{
-        "id": 10,
-        "name": "shirt",
-        "color": "red",
-        "price": "$23"
-    },...
-    ]
+``` json
+[
+  {
+    "do-si": "경기",
+    "sgg": "광명시",
+    "lat": 35.123412,
+    "lon": 127.123451
+  },
+  {
+    "do-si": "경기",
+    "sgg": "수원시",
+    "lat": 35.123512,
+    "lon": 127.122351
+  },
+  {
+    "do-si": "경기",
+    "sgg": "가평군",
+    "lat": 35.126512,
+    "lon": 127.133251
+  },
+  ...
+]
 ```
+
+#### 맛집 목록 조회
+
+GET /restaurants
+
+**Query Paramter**
+
+| 파라미터   | 타입     | 설명                                                         |
+|:-------|:-------|:-----------------------------------------------------------|
+| lat    | string | default : 필수값, 지구 y축 원점 기준 거리                              |
+| lon    | string | default : 필수값, 주기 x축 원점 기준 거리                              |
+| range  | double | default : 필수값, km 를 소숫점으로 나타냅니다. 0.5 = 500m / 1.0 = 1000km |
+| order  | string | default : distance, distance(거리순) 또는 rating(평점순)으로 정렬      |
+| page   | int    | default : 0                                                |
+| size   | int    | default : 10                                               |
+| search | string | 사업자명 내에 키워드가 포함되면 목록에 포함                                   |
+| filter | string | 위생업태명에 따른 필터링 (패스트푸드, 김밥(도시락), 중국식, 일식)                    |
+
+
+#### Response
+
+    HTTP/1.1 204
+    Content-Type: application/json
+
+``` json
+[
+	{
+		"restaurantId": 10,
+		"name": "대박김밥",
+		"roadnameAddress": "경기도 용인시 처인구 양지면 양지리 633-1",
+		"zipCode": "17158",
+		"avgRating": 3.4,
+		"distance": 0.5 // 단위 : km
+		},
+ 	{
+		"restaurantId": 11,
+		"name": "김밥",
+		"roadnameAddress": "경기도 용인시 처인구 양지면 양지리 633-2",
+		"zipCode": "17159",
+		"avgRating": 3.4,
+		"distance": 0.5 // 단위 : km
+		},
+    ...
+]
+```
+
+#### 맛집 상세 조회
+
+GET /restaurants/{restaurant_id}
+
+#### Request
+
+| 파라미터   | 타입     | 설명                                                        |
+|:--------------|:-----|:----------------------------------------------------------|
+| restaurant_id | long | 맛집 ID                                                     |
+ 
+
+#### Response
+
+```json
+  {
+	"restaurantId": 10,
+	"name": "대박김밥",
+	"sigun": "용인시",
+	"type": "김밥(도시락)",
+	"roadnameAddress": "경기도 용인시 처인구 양지면 양지리 633-1",
+	"lotAddress": "경기도 용인시 처인구 양지면 양지로 111",
+	"zipCode": "17158",
+	"lat": 37.2346508041,
+	"lon": 127.2805685812,
+	"avgRating": 3.4,
+	"ratings": [
+		{
+			"memberId": 1,
+			"memberAccount": "hello",
+			"score": 5,
+			"content": "맛있어요."
+		},
+		...
+	]
+  }
+```
+
 </details>
+
 <details>
-<summary>Get all items - click</summary>
+
+<summary>Rating</summary>
+
+#### 맛집 평가 생성
+
+POST /ratings
 
 #### Request
-```javascript
-  GET /api/items
-```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+```
+  {
+    "restaurantId": 11404,
+    "score": 4,
+    "content": "맛있어요!"
+  }
+```
 
 #### Response
-```http
-    HTTP/1.1 200
-    Content-Type: application/json
 
-    [{
-        "id": 10,
-        "name": "shirt",
-        "color": "red",
-        "price": "$23"
-    },...
-    ]
-```
+    HTTP/1.1 204
+
 </details>
 
 <br/>
@@ -156,95 +283,83 @@ To run tests, run the following command
 
 ## 프로젝트 진행 및 이슈 관리
 
-[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://bow-hair-db3.notion.site/cdb6eb37500b4580a80252ea3d7c3963?pvs=4)
+![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
+<img src="https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=Github&logoColor=white">
+<img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white">
 
 <br/>
 
 
 ## 구현과정(설계 및 의도)
-(노션, 블로그 등의 페이지로 안내 가능)
-<details>
-<summary>유저 모델과 실행결과 모델관의 관계 설정 시 00 고려 - click</summary>
 
-- 의존성 문제
-    1. Press `Ctrl` + `f` on your keyboard, to bring out the search modal.
-    2. Enter the name of the badge you need.
-    3. Copy the appropriate `![Name](link)` element and paste it in your Markdown file (e.g. README.md)
-- 00가 00 하는 문제
+[요구사항 분석 및 일정 관리](https://wonwonjung.notion.site/7169b5be3652485b82df0c1a2b639788?pvs=4)
+
+<details>
+
+<summary>MySQL Datetime vs Timestamp</summary>
+
+- Timestamp는 인덱스가 더 빠르게 생성되는 대신, 날짜 범위가 1970년~2038년 이내라서 더 이전 또는 이후의 데이터를 저장할 수 없다.
+- 인허가일자 컬럼의 날짜가 1970년 이전인 경우가 있기 때문에 Datetime을 사용하였다.
 
 </details>
 
 <details>
-<summary>00 구현 시 동시성 고려 - click</summary>
 
-- 의존성 문제
-    1. Press `Ctrl` + `f` on your keyboard, to bring out the search modal.
-    2. Enter the name of the badge you need.
-    3. Copy the appropriate `![Name](link)` element and paste it in your Markdown file (e.g. README.md)
-- 00가 00 하는 문제
+<summary>맛집 테이블 인덱스 추가</summary>
+
+- 데이터 파이프라인을 통해 데이터를 저장하기 전에 (사업장명, 도로명주소)로 중복을 확인한다. 이 과정에서 두 컬럼에 대한 검색이 매우 많이 발생하기 때문에 UNIQUE INDEX를 추가해주었다.
 
 </details>
 
 <details>
-<summary>RESTful API 설계 - click</summary>
 
-- 의존성 문제
-    1. Press `Ctrl` + `f` on your keyboard, to bring out the search modal.
-    2. Enter the name of the badge you need.
-    3. Copy the appropriate `![Name](link)` element and paste it in your Markdown file (e.g. README.md)
-- 00가 00 하는 문제
+<summary>bulk update 시 중복 처리 문제</summary>
+
+- bulk 데이터 내에 중복이 있는 경우에는 JPA 등을 통해 체크할 수 없고 로직적으로 처리하거나 중복 되고나서 예외 처리 해야한다.
+- 따라서 INSERT IGNORE INTO … 구문을 사용하여 중복된 row는 무시되도록 했다.
+
+</details>
+
+<details>
+
+<summary>Redis 캐싱</summary>
+
+- 복잡한 내용을 저장하는 것이 아닌 기존에 있던 목록 또는 정보를 저장
+- RedisTemplate 또는 RedisRepository를 사용하지 않고 @Cacheable 어노테이션으로 캐싱 구현
+
+</details>
+
+<details>
+
+<summary>평균 평점 저장</summary>
+
+- 처음 작성한 코드는 사용자가 새로운 평가를 생성할 때마다 평균 평점을 계산하여 Restaurant 테이블에 저장했다.
+- 평점의 경우 실시간 성이 아주 중요한 부분이 아니기 때문에 비동기적으로 처리하여 사용자가 평가 API를 사용할 때 평점이 계산되는 시간을 기다리지 않을 수 있게 하는 것이 더 좋겠다고 생각했다.
+- 그래서 RatingAsyncService, ScoreCalculationQueue 클래스를 생성하여 로직을 분리했다.
+  - ScoreCalculationQueue : 평가가 생성되면 큐에 저장되고, RatingAsyncService의 메서드가 작동하면 하나씩 제거한다.
+  - RatingAsyncService : Queue에 들어있는 평가들을 탐색하여 평균 평점을 30초마다 비동기적으로 처리한다.
 
 </details>
 
 <br/>
-
 
 ## TIL 및 회고
 
-<details>
-<summary>Django ORM 조회 시 발생하는 00 버그 - click</summary>
-
-- 의존성 문제
-    1. Press `Ctrl` + `f` on your keyboard, to bring out the search modal.
-    2. Enter the name of the badge you need.
-    3. Copy the appropriate `![Name](link)` element and paste it in your Markdown file (e.g. README.md)
-- 00가 00 하는 문제
-
-</details>
-
-<details>
-<summary>Django ORM 조회 시 발생하는 00 버그 - click</summary>
-
-- 의존성 문제
-    1. Press `Ctrl` + `f` on your keyboard, to bring out the search modal.
-    2. Enter the name of the badge you need.
-    3. Copy the appropriate `![Name](link)` element and paste it in your Markdown file (e.g. README.md)
-
-- 00가 00 하는 문제
-
-</details>
-
-(또는 블로그, 노션 등 링크 연동)
-
-- [Django ORM 조회 시 발생하는 00 버그 발생](#google.com)
-- [00 서비스 개발 회고록](#google.com)
+- [연관 데이터 없을 때 조회하기 (Join vs Left Join)](https://wonwonjung.notion.site/Join-vs-Left-Join-0df2958dbbd7488a99ba1ddf2ac6c7bc?pvs=4)
+- [@Modifying 어노테이션](https://wonwonjung.notion.site/Modifying-bb318f67700a4260be07bbd68a8c83cb?pvs=4)
+- [JPA의 IDENTITY 전략과 Bulk Insert](https://wonwonjung.notion.site/JPA-IDENTITY-Bulk-Insert-8c3f6783defb4371be28accca35e5227?pvs=4)
+- [Redis 시작하기](https://wonwonjung.notion.site/Redis-ad1cc11ef6ca46b5a6c13bc877552a12?pvs=4)
 
 <br/>
-
-
-## Authors
-
-- [@user1](https://www.github.com/2)
-- [@user2](https://www.github.com/2)
-- [@user3](https://www.github.com/2)
-
-<br/>
-
 
 ## References
 
-- [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
-- [Awesome README](https://github.com/matiassingers/awesome-readme)
-- [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
+- [[Redis] Windows 환경에서 Redis 설치 및 실행](https://velog.io/@jinyngg/Redis-%EC%9C%88%EB%8F%84%EC%9A%B0-Redis-%EC%84%A4%EC%B9%98)
+- [[Redis] SpringBoot Data Redis 로컬/통합 테스트 환경 구축하기](https://jojoldu.tistory.com/297)
+- [JPA의 Batch Insert](https://jaehun2841.github.io/2020/11/22/2020-11-22-spring-data-jpa-batch-insert)
+- [WebClient로 OpenApi 데이터 수집하기](https://velog.io/@jmjmjmz732002/Spring-외부-API-통신-리팩토링을-하게-된-이유#webclient-기본-이용법)
+- [Spring Scheduler 테스트하기](https://silvergoni.tistory.com/entry/use-awaitility를-사용하여-딜레이-테스트하기)
+- [스프링에서 @Async로 비동기처리하기](https://springboot.tistory.com/38)
+
 
 
