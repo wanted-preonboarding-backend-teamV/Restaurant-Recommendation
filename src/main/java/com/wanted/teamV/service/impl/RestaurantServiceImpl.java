@@ -1,6 +1,5 @@
 package com.wanted.teamV.service.impl;
 
-import com.wanted.teamV.dto.Coordinate;
 import com.wanted.teamV.dto.res.RatingResDto;
 import com.wanted.teamV.dto.res.RestaurantDetailResDto;
 import com.wanted.teamV.dto.res.RestaurantDistrictResDto;
@@ -34,34 +33,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<RestaurantResDto> getRestaurants(String lat, String lon, double range, String order, int page, String restaurantName, String restaurantType) {
-        Coordinate coordinate = new Coordinate(Double.parseDouble(lat), Double.parseDouble(lon));
+        double memberLat = Double.parseDouble(lat);
+        double memberLon = Double.parseDouble(lon);
         RestaurantType type = RestaurantType.toEnum(restaurantType);
-        Map<Restaurant, Double> restaurants = new HashMap<>();
-
-        //요청한 좌표 안에 있는 맛집 필터링
-        restaurantRepository.getRestaurants(page, restaurantName, type).forEach(restaurant -> {
-                    Coordinate restaurantCoordinate = new Coordinate(restaurant.getLat(), restaurant.getLon());
-                    double distance = DistanceCalculator.calculate(coordinate, restaurantCoordinate); //km
-
-                    if(distance <= range) {
-                        restaurants.put(restaurant, distance);
-                    }
-                });
-
-        List<Restaurant> keySet = new ArrayList<>(restaurants.keySet());
         RestaurantOrdering ordering = RestaurantOrdering.toEnum(order);
 
-        if(ordering.isOrderByDistance()) {
-            keySet.sort(Comparator.comparing(restaurants::get));
-
-            return keySet.stream()
-                    .map(restaurant -> new RestaurantResDto(restaurant, restaurants.get(restaurant)))
-                    .toList();
-        }
-
-        return keySet.stream()
-                .sorted(Comparator.comparing(Restaurant::getAverageRating))
-                .map(restaurant -> new RestaurantResDto(restaurant, restaurants.get(restaurant)))
+        return restaurantRepository.getRestaurants(memberLat, memberLon, range, ordering, page, restaurantName, type).stream()
+                .map(restaurant -> new RestaurantResDto(restaurant, DistanceCalculator.calculate(memberLat, memberLon, restaurant.getLat(), restaurant.getLon())))
                 .toList();
     }
 

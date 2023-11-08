@@ -29,8 +29,8 @@ public class RestaurantController {
             @RequestParam("range") double range,
             @RequestParam(defaultValue = "distance") String order,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam("search") String restaurantName,
-            @RequestParam("filter") String restaurantType
+            @RequestParam(value = "search", defaultValue = "") String restaurantName,
+            @RequestParam(value = "filter", defaultValue = "") String restaurantType
     ) {
         List<RestaurantResDto> response = restaurantService.getRestaurants(lat, lon, range, order, page, restaurantName, restaurantType);
         return ResponseEntity.ok(response);

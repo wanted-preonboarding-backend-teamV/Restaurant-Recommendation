@@ -134,7 +134,7 @@ public class RestaurantServiceImplTest {
                     .member(member)
                     .restaurant(restaurant)
                     .score(3)
-                    .content("너무 맛있네요")
+                    .content("내용")
                     .createdAt(LocalDateTime.now())
                     .build();
             ratingRepository.save(rating);
