@@ -11,9 +11,11 @@ import com.wanted.teamV.service.RestaurantService;
 import com.wanted.teamV.type.RestaurantOrdering;
 import com.wanted.teamV.type.RestaurantType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -25,10 +27,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
+    @Cacheable(value = "districts", key = "'sggList'", cacheManager = "cacheManager")
     public List<RestaurantDistrictResDto> getDistricts() {
         return fileParser.parse().stream()
                 .map(RestaurantDistrictResDto::toDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -44,6 +47,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Cacheable(value = "restaurant", key = "#restaurantId", cacheManager = "cacheManager")
     public RestaurantDetailResDto getRestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
 
