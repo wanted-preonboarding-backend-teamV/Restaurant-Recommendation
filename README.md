@@ -25,7 +25,7 @@
 
 ## Skils
 언어 및 프레임워크: ![Static Badge](https://img.shields.io/badge/JAVA-17-blue) ![Static Badge](https://img.shields.io/badge/SpringBoot-3.1.5-green)<br/>
-데이터베이스: ![Static Badge](https://img.shields.io/badge/MySQL--red)<br/>
+데이터베이스: ![Static Badge](https://img.shields.io/badge/MySQL--red) ![Static Badge](https://img.shields.io/badge/Redis--red)<br/>
 테스트 데이터베이스: ![Static Badge](https://img.shields.io/badge/H2--red)
 <br/>
 
