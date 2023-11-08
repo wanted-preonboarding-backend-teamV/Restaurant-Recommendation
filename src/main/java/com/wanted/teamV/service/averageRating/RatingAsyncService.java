@@ -15,7 +15,7 @@ import static com.wanted.teamV.exception.ErrorCode.INVALID_RATING_ENTITY;
 
 @Service
 @RequiredArgsConstructor
-public class RatingBatchService {
+public class RatingAsyncService {
 
     private final RatingRepository ratingRepository;
     private final RestaurantRepository restaurantRepository;
