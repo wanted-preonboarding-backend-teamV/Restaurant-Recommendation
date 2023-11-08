@@ -20,7 +20,7 @@ public enum RestaurantOrdering {
         return this.name().equalsIgnoreCase(type);
     }
 
-    public boolean isOrderByDistance() {
-        return this.equals(RestaurantOrdering.DISTANCE);
+    public boolean isOrderByRating() {
+        return this.equals(RestaurantOrdering.RATING);
     }
 }

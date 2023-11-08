@@ -1,5 +1,6 @@
 package com.wanted.teamV.repository.impl;
 
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
@@ -7,6 +8,7 @@ import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.teamV.entity.Restaurant;
 import com.wanted.teamV.repository.RestaurantQRepository;
+import com.wanted.teamV.type.RestaurantOrdering;
 import com.wanted.teamV.type.RestaurantType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -32,12 +34,15 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
     );
 
     @Override
-    public List<Restaurant> getRestaurants(int page, String restaurantName, RestaurantType restaurantType) {
+    public List<Restaurant> getRestaurants(double lat, double lon, double range, RestaurantOrdering ordering, int page, String restaurantName, RestaurantType restaurantType) {
+        NumberExpression<Double> distance = haversineDistance(lat, lon, restaurant.lat, restaurant.lon);
+
         return queryFactory
                 .selectFrom(restaurant)
-                .where(restaurant.name.containsIgnoreCase(restaurantName).or(filterRestaurantType(restaurantType)))
+                .where(distance.loe(range).and(restaurant.name.containsIgnoreCase(restaurantName).or(filterRestaurantType(restaurantType))))
                 .offset(page)
                 .limit(PAGE_SIZE)
+                .orderBy(orderRestaurants(ordering, distance))
                 .fetch();
     }
 
@@ -49,6 +54,14 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
             case JAPANESE -> restaurant.sanittnIndutypeNm.eq(JAPANESE.getType());
             case EMPTY -> null;
         };
+    }
+
+    private OrderSpecifier<?> orderRestaurants(RestaurantOrdering order, NumberExpression<Double> distance) {
+        if(order.isOrderByRating()) {
+            return restaurant.averageRating.desc();
+        }
+
+        return distance.asc();
     }
 
     // 사용자로부터 거리가 1km 이내인 음식점을 평균 평점이 높은 순서대로 최대 5개 까지 반환
