@@ -15,10 +15,6 @@ spring:
         format_sql: true
         show_sql: true
 
-logging:
-  level:
-    org.hibernate.SQL: debug
-
 security:
   jwt:
     token:

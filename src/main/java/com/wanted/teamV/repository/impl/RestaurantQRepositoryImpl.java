@@ -47,10 +47,10 @@ public class RestaurantQRepositoryImpl implements RestaurantQRepository {
 
     private BooleanExpression filterRestaurantType(RestaurantType type) {
         return switch (type) {
-            case FAST_FOOD -> restaurant.sanittnIndutypeNm.eq(FAST_FOOD.getType());
-            case LUNCH_BOX -> restaurant.sanittnIndutypeNm.eq(LUNCH_BOX.getType());
-            case CHINESE -> restaurant.sanittnIndutypeNm.eq(CHINESE.getType());
-            case JAPANESE -> restaurant.sanittnIndutypeNm.eq(JAPANESE.getType());
+            case FAST_FOOD -> restaurant.type.eq(FAST_FOOD.getType());
+            case LUNCH_BOX -> restaurant.type.eq(LUNCH_BOX.getType());
+            case CHINESE -> restaurant.type.eq(CHINESE.getType());
+            case JAPANESE -> restaurant.type.eq(JAPANESE.getType());
             case EMPTY -> null;
         };
     }
