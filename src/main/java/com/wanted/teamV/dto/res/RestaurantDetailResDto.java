@@ -1,5 +1,9 @@
 package com.wanted.teamV.dto.res;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.wanted.teamV.entity.Restaurant;
 import lombok.Builder;
 
@@ -19,8 +23,15 @@ public record RestaurantDetailResDto(
         Double averageRating,
         String bsnStateNm,
         String sigunCd,
+
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         LocalDateTime licenseDe,
+
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         LocalDateTime clsbizDe,
+
         Double locplcAr,
         String gradFacltDivNm,
         Integer maleEnflpsnCnt,

@@ -1,9 +1,7 @@
 package com.wanted.teamV.service.impl;
 
-import com.wanted.teamV.dto.res.RatingResDto;
-import com.wanted.teamV.dto.res.RestaurantDetailResDto;
-import com.wanted.teamV.dto.res.RestaurantDistrictResDto;
-import com.wanted.teamV.dto.res.RestaurantResDto;
+import com.wanted.teamV.dto.Coordinate;
+import com.wanted.teamV.dto.res.*;
 import com.wanted.teamV.entity.Rating;
 import com.wanted.teamV.entity.Restaurant;
 import com.wanted.teamV.repository.RestaurantRepository;
@@ -11,9 +9,11 @@ import com.wanted.teamV.service.RestaurantService;
 import com.wanted.teamV.type.RestaurantOrdering;
 import com.wanted.teamV.type.RestaurantType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -25,25 +25,50 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
+    @Cacheable(value = "districts", key = "'sggList'", cacheManager = "cacheManager")
     public List<RestaurantDistrictResDto> getDistricts() {
-        return fileParser.parse().stream()
+        List<RestaurantDistrictResDto> lists = fileParser.parse().stream()
                 .map(RestaurantDistrictResDto::toDto)
-                .toList();
+                .collect(Collectors.toList());
+
+        return lists;
     }
 
     @Override
     public List<RestaurantResDto> getRestaurants(String lat, String lon, double range, String order, int page, String restaurantName, String restaurantType) {
-        double memberLat = Double.parseDouble(lat);
-        double memberLon = Double.parseDouble(lon);
+        Coordinate coordinate = new Coordinate(Double.parseDouble(lat), Double.parseDouble(lon));
         RestaurantType type = RestaurantType.toEnum(restaurantType);
+        Map<Restaurant, Double> restaurants = new HashMap<>();
+
+        //요청한 좌표 안에 있는 맛집 필터링
+        restaurantRepository.getRestaurants(page, restaurantName, type).forEach(restaurant -> {
+                    Coordinate restaurantCoordinate = new Coordinate(restaurant.getLat(), restaurant.getLon());
+                    double distance = DistanceCalculator.calculate(coordinate, restaurantCoordinate); //km
+
+            if (distance <= range) {
+                restaurants.put(restaurant, distance);
+            }
+        });
+
+        List<Restaurant> keySet = new ArrayList<>(restaurants.keySet());
         RestaurantOrdering ordering = RestaurantOrdering.toEnum(order);
 
-        return restaurantRepository.getRestaurants(memberLat, memberLon, range, ordering, page, restaurantName, type).stream()
-                .map(restaurant -> new RestaurantResDto(restaurant, DistanceCalculator.calculate(memberLat, memberLon, restaurant.getLat(), restaurant.getLon())))
+        if (ordering.isOrderByDistance()) {
+            keySet.sort(Comparator.comparing(restaurants::get));
+
+            return keySet.stream()
+                    .map(restaurant -> new RestaurantResDto(restaurant, restaurants.get(restaurant)))
+                    .toList();
+        }
+
+        return keySet.stream()
+                .sorted(Comparator.comparing(Restaurant::getAverageRating))
+                .map(restaurant -> new RestaurantResDto(restaurant, restaurants.get(restaurant)))
                 .toList();
     }
 
     @Override
+    @Cacheable(value = "restaurant", key = "#restaurantId", cacheManager = "cacheManager")
     public RestaurantDetailResDto getRestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
 
