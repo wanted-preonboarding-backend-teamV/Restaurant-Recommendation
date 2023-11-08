@@ -37,6 +37,10 @@ public class RecommendationScheduler {
     @Value("${discord.webhook.footer_icon}")
     private String FOOTER_ICON;
 
+    private String authorName = "Team V";
+
+    private String footerText = "언제나 당신을 위한 맛집과 함께 돌아올게요, Enjoy your LunchHere :)";
+
     @Scheduled(cron = "${schedules.cron.lunch-recommendation}")
     @Transactional(readOnly = true)
     public void sendRecommendations() {
@@ -115,7 +119,7 @@ public class RecommendationScheduler {
 
     private DiscordWebhookReqDto.Author createAuthor() {
         return DiscordWebhookReqDto.Author.builder()
-                .name("Team V")
+                .name(authorName)
                 .url(AUTHOR_URL)
                 .iconUrl(AUTHOR_ICON)
                 .build();
@@ -123,7 +127,7 @@ public class RecommendationScheduler {
 
     private DiscordWebhookReqDto.Footer createFooter() {
         return DiscordWebhookReqDto.Footer.builder()
-                .text("언제나 당신을 위한 맛집과 함께 돌아올게요, Enjoy your LunchHere :)")
+                .text(footerText)
                 .iconUrl(FOOTER_ICON)
                 .build();
     }
