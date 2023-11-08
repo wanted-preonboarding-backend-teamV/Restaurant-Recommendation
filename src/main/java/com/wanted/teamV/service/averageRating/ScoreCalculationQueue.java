@@ -1,13 +1,11 @@
 package com.wanted.teamV.service.averageRating;
 
 import com.wanted.teamV.entity.Rating;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-@Slf4j
 @Service
 public class ScoreCalculationQueue {
 
