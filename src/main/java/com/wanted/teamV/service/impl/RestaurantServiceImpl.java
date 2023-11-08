@@ -68,6 +68,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Cacheable(value = "restaurant", key = "#restaurantId", cacheManager = "cacheManager")
     public RestaurantDetailResDto getRestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
 
