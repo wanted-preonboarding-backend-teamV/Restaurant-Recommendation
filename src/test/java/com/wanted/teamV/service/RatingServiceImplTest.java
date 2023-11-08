@@ -9,6 +9,7 @@ import com.wanted.teamV.exception.ErrorCode;
 import com.wanted.teamV.repository.MemberRepository;
 import com.wanted.teamV.repository.RatingRepository;
 import com.wanted.teamV.repository.RestaurantRepository;
+import com.wanted.teamV.service.averageRating.ScoreCalculationQueue;
 import com.wanted.teamV.service.impl.RatingServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -40,11 +41,13 @@ class RatingServiceImplTest {
     @Mock
     private MemberRepository memberRepository;
 
+    @Mock
+    private ScoreCalculationQueue scoreCalculationQueue;
+
     @Test
     @DisplayName("평가 생성 - 성공")
     void createRating_Success() {
         //given
-        long restaurantId = 1L;
         long memberId = 1L;
 
         RatingCreateReqDto requestDto = RatingCreateReqDto.builder()
@@ -59,16 +62,12 @@ class RatingServiceImplTest {
         Restaurant mockRestaurant = mock(Restaurant.class);
         when(restaurantRepository.findById(anyLong())).thenReturn(Optional.of(mockRestaurant));
 
-        when(mockRestaurant.getId()).thenReturn(restaurantId);
-        when(ratingRepository.calculateAverageRatingByRestaurant(mockRestaurant.getId())).thenReturn((double) requestDto.getScore());
-
         //when
         ratingService.createRating(memberId, requestDto);
 
         //then
         verify(ratingRepository, times(1)).save(any(Rating.class));
-        verify(restaurantRepository, times(1)).updateAverageRating(restaurantId, requestDto.getScore());
-        assertEquals(5.0, ratingRepository.calculateAverageRatingByRestaurant(mockRestaurant.getId()));
+        verify(scoreCalculationQueue, times(1)).enqueueRatingForCalculation(any(Rating.class));
     }
 
     @Nested

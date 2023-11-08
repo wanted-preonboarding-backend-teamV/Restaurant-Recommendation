@@ -30,6 +30,11 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
+  task:
+    scheduling:
+      pool:
+        size: 5
+
 security:
   jwt:
     token:
@@ -45,6 +50,7 @@ schedules:
   cron:
     restaurant-collection: 0 0 2 * * *
     lunch-recommendation: 0 30 11 * * *
+    rating-batch: 30 * * * * *
 
 discord:
   bot: teamV

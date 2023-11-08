@@ -20,6 +20,7 @@ public enum ErrorCode {
     INVALID_LON_RANGE(HttpStatus.BAD_REQUEST, "경도 범위를 넘었습니다. (124 ~ 132)"),
     INVALID_RESTAURANT_SORT_TYPE(HttpStatus.BAD_REQUEST, "정렬 값이 잘못되었습니다."),
     RESTAURANT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 맛집을 찾을 수 없습니다."),
+    INVALID_RATING_ENTITY(HttpStatus.BAD_REQUEST, "유효하지 않은 평가 객체입니다."),
     ;
 
     private final HttpStatus status;

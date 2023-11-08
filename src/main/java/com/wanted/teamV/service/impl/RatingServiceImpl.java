@@ -9,12 +9,10 @@ import com.wanted.teamV.repository.MemberRepository;
 import com.wanted.teamV.repository.RatingRepository;
 import com.wanted.teamV.repository.RestaurantRepository;
 import com.wanted.teamV.service.RatingService;
+import com.wanted.teamV.service.averageRating.ScoreCalculationQueue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.text.DecimalFormat;
-import java.util.Random;
 
 import static com.wanted.teamV.exception.ErrorCode.INVALID_REQUEST;
 import static com.wanted.teamV.exception.ErrorCode.RESTAURANT_NOT_FOUND;
@@ -22,11 +20,13 @@ import static com.wanted.teamV.exception.ErrorCode.RESTAURANT_NOT_FOUND;
 @Service
 @RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
+
     private final RestaurantRepository restaurantRepository;
     private final RatingRepository ratingRepository;
     private final MemberRepository memberRepository;
+    private final ScoreCalculationQueue scoreCalculationQueue;
 
-    // 맛집 평점 생성 메서드
+    // 맛집 평가 생성 메서드
     @Override
     @Transactional
     public void createRating(Long memberId, RatingCreateReqDto request) {
@@ -44,12 +44,8 @@ public class RatingServiceImpl implements RatingService {
 
         ratingRepository.save(rating);
 
-        // 평균 평점을 계산하고 소수점 첫번째 자리 까지만 저장
-        double averageRating = ratingRepository.calculateAverageRatingByRestaurant(restaurant.getId());
-        DecimalFormat decimalFormat = new DecimalFormat("#.#");
-        averageRating = Double.parseDouble(decimalFormat.format(averageRating));
-
-        restaurantRepository.updateAverageRating(restaurant.getId(), averageRating);
+        // 평균 평점 계산을 위해 queue에 rating 정보 저장
+        scoreCalculationQueue.enqueueRatingForCalculation(rating);
     }
 
 }
