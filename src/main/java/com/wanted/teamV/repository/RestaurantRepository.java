@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, RestaurantJdbcRepository, RestaurantQRepository {
     List<Restaurant> findAllByNameAndRoadnameAddress(String name, String roadnameAddress);
 
-    @Query("SELECT r FROM Restaurant r join fetch r.ratingList WHERE r.id = :id")
+    @Query("SELECT r FROM Restaurant r left join fetch r.ratingList WHERE r.id = :id")
     Optional<Restaurant> findByIdWithRatingsUsingFetchJoin(@Param("id") Long id);
 
     default Restaurant getById(Long id) {

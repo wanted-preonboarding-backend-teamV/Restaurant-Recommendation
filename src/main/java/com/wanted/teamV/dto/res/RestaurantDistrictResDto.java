@@ -13,8 +13,8 @@ public record RestaurantDistrictResDto(
         return new RestaurantDistrictResDto(
                 districtData[0],
                 districtData[1],
-                Double.parseDouble(districtData[2]),
-                Double.parseDouble(districtData[3])
+                Double.parseDouble(districtData[3]),
+                Double.parseDouble(districtData[2])
         );
     }
 }
