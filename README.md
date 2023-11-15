@@ -19,6 +19,7 @@
 
 ## 개요
 본인의 위치 또는 특정 위치에서 반경 이내에 있는 맛집을 추천해주는 서비스
+
 <br/>
 
 
@@ -26,6 +27,7 @@
 언어 및 프레임워크: ![Static Badge](https://img.shields.io/badge/JAVA-17-blue) ![Static Badge](https://img.shields.io/badge/SpringBoot-3.1.5-green)<br/>
 데이터베이스: ![Static Badge](https://img.shields.io/badge/MySQL--red) ![Static Badge](https://img.shields.io/badge/Redis--red)<br/>
 테스트 데이터베이스: ![Static Badge](https://img.shields.io/badge/H2--red)
+
 <br/>
 
 ## Team
@@ -48,7 +50,9 @@
 <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white">
 
 ### 일정 관리 - Notion
+
 [요구사항 분석 및 일정 관리 - Link](https://wonwonjung.notion.site/7169b5be3652485b82df0c1a2b639788?pvs=4)
+
 ![task-management](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/29030538/6a464fec-dc9e-454c-afd8-59b4d5c074b6)
 
 ### 이슈 관리 - Github
