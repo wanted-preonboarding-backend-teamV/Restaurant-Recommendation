@@ -1,16 +1,15 @@
-![logo](https://static.wanted.co.kr/images/events/3178/58ac3248.jpg)
-
 # 지리 기반 맛집 추천 웹 서비스
-본 서비스는 공공데이터를 활용하여, 지역 음식점 목록을 자동으로 업데이트 하고 이를 활용한다. 사용자 위치에맞게 맛집 및 메뉴를 추천하여 더 나은 다양한 음식 경험을 제공하고, 음식을 좋아하는 사람들 간의 소통과 공유를 촉진하려 합니다.
+본 서비스는 공공데이터를 활용하여, 지역 음식점 목록을 자동으로 업데이트 하고 이를 활용합니다. 사용자 위치에맞게 맛집 및 메뉴를 추천하여 더 나은 다양한 음식 경험을 제공하고, 음식을 좋아하는 사람들 간의 소통과 공유를 촉진하려 합니다.
 <br/>
 
 ## Table of Contents
 - [개요](#개요)
 - [Skils](#skils)
-- [Teams](#teams)
-- [Running Tests](#running-tests)
-- [API Reference](#api-reference)
+- [Team](#team)
 - [프로젝트 진행 및 이슈 관리](#프로젝트-진행-및-이슈-관리)
+- [ERD](#erd)
+- [API Reference](#api-reference)
+- [Running Tests](#running-tests)
 - [구현과정(설계 및 의도)](#구현과정(설계-및-의도))
 - [TIL 및 회고](#til-및-회고)
 - [References](#references)
@@ -29,33 +28,44 @@
 테스트 데이터베이스: ![Static Badge](https://img.shields.io/badge/H2--red)
 <br/>
 
-## Teams
+## Team
 
-| 팀원      | 담당                                              |
-|---------|-------------------------------------------------|
-| 신민석(팀장) | 사용자 회원가입, 로그인, 설정 업데이트, 조회, 시군구 목록, 맛집 상세 조회 캐싱 |
-| 김나윤     | 맛집 평가 생성, 점심 추천 Discord Webhook                 |
-| 남세원     | 시군구 목록 조회, 맛집 목록, 상세 조회                         |
-| 원정연     | 공공 데이터 파이프라인 (수집, 전처리, 저장, 스케쥴링)                |
+| 팀원                                            | 담당                                              |
+|-----------------------------------------------|-------------------------------------------------|
+| [신민석](https://github.com/shinmin9812)  `(팀장)` | 사용자 회원가입, 로그인, 설정 업데이트, 조회, 시군구 목록, 맛집 상세 조회 캐싱 |
+| [김나윤](https://github.com/nayoonk928)          | 맛집 평가 생성, 점심 추천 Discord Webhook                 |
+| [남세원](https://github.com/nswon)       | 시군구 목록 조회, 맛집 목록, 상세 조회                         |
+| [원정연](https://github.com/jjungyeun)           | 공공 데이터 파이프라인 (수집, 전처리, 저장, 스케쥴링)                |
 
 
 <br/>
 
-## Running Tests
 
-> ![Static Badge](https://img.shields.io/badge/Test_Passed-51/53-green) <br/>
-![test](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/83534757/96e99a9f-e2f4-41e4-a34f-3e8310c700f9)
-> - API 테스트는 성공했으나 Github Actions CI에서 Redis 연결을 하지 못해 Redis 연결된 2개의 테스트만 실패
-> - 추후 Docker 활용해서 CI에도 Redis 구현 예정
-> 
+## 프로젝트 진행 및 이슈 관리
+
+![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
+<img src="https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=Github&logoColor=white">
+<img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white">
+
+### 일정 관리 - Notion
+[요구사항 분석 및 일정 관리 - Link](https://wonwonjung.notion.site/7169b5be3652485b82df0c1a2b639788?pvs=4)
+![task-management](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/29030538/6a464fec-dc9e-454c-afd8-59b4d5c074b6)
+
+### 이슈 관리 - Github
+![issue-management](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/29030538/1ded2965-392b-43ad-95a6-2e8551c97bc2)
+
 <br/>
 
+## ERD
+![erd](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/29030538/ef306cbd-81df-4c34-b131-6d090814b3ad)
+
+<br/>
 
 ## API Reference
-[API 명세서](https://wonwonjung.notion.site/API-2f04e83f36e349159ccc476d3ea869f3?pvs=4)
+[API 명세서 - Notion Link](https://wonwonjung.notion.site/API-2f04e83f36e349159ccc476d3ea869f3?pvs=4)
 
 <details>
-<summary>Member</summary>
+<summary>Member - click</summary>
 
 #### 회원가입
 
@@ -135,7 +145,7 @@ GET /members
 
 </details>
 <details>
-<summary>Restaurant</summary>
+<summary>Restaurant - click</summary>
 
 #### 시군구 목록 조회
 
@@ -256,7 +266,7 @@ GET /restaurants/{restaurant_id}
 
 <details>
 
-<summary>Rating</summary>
+<summary>Rating - click</summary>
 
 #### 맛집 평가 생성
 
@@ -280,23 +290,22 @@ POST /ratings
 
 <br/>
 
+## Running Tests
 
-## 프로젝트 진행 및 이슈 관리
-
-![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
-<img src="https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=Github&logoColor=white">
-<img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white">
+>![Static Badge](https://img.shields.io/badge/Test_Passed-51/53-green) <br/>
+>![test](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/29030538/b5f7f9e2-d77c-42d7-9d2f-8042a7cde63f)
+ - API 테스트는 모두 성공했으나 Github Actions에서 Redis 연결을 하지 못해 Redis가 연결된 2개의 테스트 실패
+ - 추후 Docker 활용해서 CI에도 Redis 구현 예정
 
 <br/>
 
 
 ## 구현과정(설계 및 의도)
 
-[요구사항 분석 및 일정 관리](https://wonwonjung.notion.site/7169b5be3652485b82df0c1a2b639788?pvs=4)
 
 <details>
 
-<summary>MySQL Datetime vs Timestamp</summary>
+<summary>MySQL Datetime vs Timestamp - click</summary>
 
 - Timestamp는 인덱스가 더 빠르게 생성되는 대신, 날짜 범위가 1970년~2038년 이내라서 더 이전 또는 이후의 데이터를 저장할 수 없다.
 - 인허가일자 컬럼의 날짜가 1970년 이전인 경우가 있기 때문에 Datetime을 사용하였다.
@@ -305,7 +314,7 @@ POST /ratings
 
 <details>
 
-<summary>맛집 테이블 인덱스 추가</summary>
+<summary>맛집 테이블 인덱스 추가 - click</summary>
 
 - 데이터 파이프라인을 통해 데이터를 저장하기 전에 (사업장명, 도로명주소)로 중복을 확인한다. 이 과정에서 두 컬럼에 대한 검색이 매우 많이 발생하기 때문에 UNIQUE INDEX를 추가해주었다.
 
@@ -313,7 +322,7 @@ POST /ratings
 
 <details>
 
-<summary>bulk update 시 중복 처리 문제</summary>
+<summary>bulk update 시 중복 처리 문제 - click</summary>
 
 - bulk 데이터 내에 중복이 있는 경우에는 JPA 등을 통해 체크할 수 없고 로직적으로 처리하거나 중복 되고나서 예외 처리 해야한다.
 - 따라서 INSERT IGNORE INTO … 구문을 사용하여 중복된 row는 무시되도록 했다.
@@ -322,7 +331,7 @@ POST /ratings
 
 <details>
 
-<summary>Redis 캐싱</summary>
+<summary>Redis 캐싱 - click</summary>
 
 - 복잡한 내용을 저장하는 것이 아닌 기존에 있던 목록 또는 정보를 저장
 - RedisTemplate 또는 RedisRepository를 사용하지 않고 @Cacheable 어노테이션으로 캐싱 구현
@@ -331,7 +340,7 @@ POST /ratings
 
 <details>
 
-<summary>평균 평점 저장</summary>
+<summary>평균 평점 저장 - click</summary>
 
 - 처음 작성한 코드는 사용자가 새로운 평가를 생성할 때마다 평균 평점을 계산하여 Restaurant 테이블에 저장했다.
 - 평점의 경우 실시간 성이 아주 중요한 부분이 아니기 때문에 비동기적으로 처리하여 사용자가 평가 API를 사용할 때 평점이 계산되는 시간을 기다리지 않을 수 있게 하는 것이 더 좋겠다고 생각했다.
