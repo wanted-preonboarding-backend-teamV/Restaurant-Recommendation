@@ -339,6 +339,9 @@ POST /ratings
 
 - 복잡한 내용을 저장하는 것이 아닌 기존에 있던 목록 또는 정보를 저장
 - RedisTemplate 또는 RedisRepository를 사용하지 않고 @Cacheable 어노테이션으로 캐싱 구현
+- 캐싱 이전 316ms에서 이후 64ms로 약 79% 정도 조회 시간 감소
+![1](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/83534757/66150172-2cb3-4955-a480-19916b1cad1b)
+![2](https://github.com/wanted-preonboarding-backend-teamV/Restaurant-Recommendation/assets/83534757/405f650f-017d-4499-9f79-149d74915212)
 
 </details>
 
